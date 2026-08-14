@@ -1,22 +1,16 @@
-const AWS = require("aws-sdk");
 const { v4: uuidv4 } = require("uuid");
-
-AWS.config.update({
-    region: "eu-north-1" // change if needed
-});
-
-const dynamoDB = new AWS.DynamoDB.DocumentClient();
+const dynamoDB = require("../config/dynamo");
 
 exports.createEvent = async (req, res) => {
     try {
-        const { title, description, category, date, location, price } = req.body;
+        const { title, description, category, date, location, price, status } = req.body;
 
         const organizerId = req.organizer.organizerId;
 
         const eventId = uuidv4();
 
         const params = {
-            TableName: "EventoEvents",
+            TableName: "Events",
             Item: {
                 eventId,
                 organizerId,
@@ -25,7 +19,8 @@ exports.createEvent = async (req, res) => {
                 category,
                 date,
                 location,
-                price,
+                price: parseFloat(price) || 0,
+                status: status || "PUBLISHED",
                 createdAt: new Date().toISOString()
             }
         };
@@ -48,12 +43,17 @@ exports.createEvent = async (req, res) => {
 exports.getAllEvents = async (req, res) => {
     try {
         const params = {
-            TableName: "EventoEvents"
+            TableName: "Events"
         };
 
         const data = await dynamoDB.scan(params).promise();
 
-        res.status(200).json(data.Items);
+        // Users should only see PUBLISHED events (or legacy events without status)
+        const publishedEvents = (data.Items || []).filter(
+            event => event.status === "PUBLISHED" || !event.status
+        );
+
+        res.status(200).json(publishedEvents);
 
     } catch (error) {
         console.error("Error fetching events:", error);
@@ -79,15 +79,30 @@ exports.registerEvent = async (req, res) => {
             });
         }
 
+        // Check if registration already exists
+        const checkParams = {
+            TableName: "EventRegisterations",
+            FilterExpression: "userId = :userId AND eventId = :eventId",
+            ExpressionAttributeValues: {
+                ":userId": userId,
+                ":eventId": eventId
+            }
+        };
+        const checkResult = await dynamoDB.scan(checkParams).promise();
+        if (checkResult.Items && checkResult.Items.length > 0) {
+            return res.status(400).json({
+                message: "You are already registered for this event"
+            });
+        }
+
         const params = {
-            TableName: "EventoRegistrations",
+            TableName: "EventRegisterations",
             Item: {
+                registerationId: uuidv4(),
                 eventId: eventId,
                 userId: userId,
-                registrationId: uuidv4(),
                 registeredAt: new Date().toISOString()
-            },
-            ConditionExpression: "attribute_not_exists(userId)"
+            }
         };
 
         await dynamoDB.put(params).promise();
@@ -97,16 +112,57 @@ exports.registerEvent = async (req, res) => {
         });
 
     } catch (error) {
-
-        if (error.code === "ConditionalCheckFailedException") {
-            return res.status(400).json({
-                message: "You are already registered for this event"
-            });
-        }
-
         console.error("Registration error:", error);
         res.status(500).json({
             message: "Registration failed"
+        });
+    }
+};
+
+exports.getUserRegistrations = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+
+        const regParams = {
+            TableName: "EventRegisterations",
+            FilterExpression: "userId = :userId",
+            ExpressionAttributeValues: {
+                ":userId": userId
+            }
+        };
+
+        const regData = await dynamoDB.scan(regParams).promise();
+        const registrations = regData.Items || [];
+
+        if (registrations.length === 0) {
+            return res.status(200).json([]);
+        }
+
+        const eventParams = {
+            TableName: "Events"
+        };
+        const eventData = await dynamoDB.scan(eventParams).promise();
+        const allEvents = eventData.Items || [];
+
+        const eventsMap = {};
+        allEvents.forEach(evt => {
+            eventsMap[evt.eventId] = evt;
+        });
+
+        const result = registrations.map(reg => {
+            const eventInfo = eventsMap[reg.eventId] || null;
+            return {
+                ...reg,
+                event: eventInfo
+            };
+        }).filter(item => item.event !== null);
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        console.error("Error fetching user registrations:", error);
+        res.status(500).json({
+            message: "Failed to fetch registrations"
         });
     }
 };

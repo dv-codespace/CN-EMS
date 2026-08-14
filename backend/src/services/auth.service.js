@@ -75,7 +75,8 @@ exports.loginUser = async (data) => {
       jobTitle: user.jobTitle,
       bio: user.bio,
       timezone: user.timezone, 
-      language: user.language
+      language: user.language,
+      profileImage: user.profileImage
     },
     process.env.JWT_SECRET,
     { expiresIn: "1h" }
@@ -97,7 +98,8 @@ exports.updateUserProfile = async (userId, data) => {
     jobTitle,
     bio,
     timezone,
-    language
+    language,
+    profileImage
   } = data;
 
   await dynamoDb.update({
@@ -111,7 +113,8 @@ exports.updateUserProfile = async (userId, data) => {
           #jobTitle = :jobTitle,
           #bio = :bio,
           #timezone = :timezone,
-          #language = :language
+          #language = :language,
+          #profileImage = :profileImage
     `,
     ExpressionAttributeNames: {
       "#name": "name",
@@ -121,7 +124,8 @@ exports.updateUserProfile = async (userId, data) => {
       "#jobTitle": "jobTitle",
       "#bio": "bio",
       "#timezone": "timezone",
-      "#language": "language"
+      "#language": "language",
+      "#profileImage": "profileImage"
     },
     ExpressionAttributeValues: {
       ":name": name || "",
@@ -131,7 +135,8 @@ exports.updateUserProfile = async (userId, data) => {
       ":jobTitle": jobTitle || "",
       ":bio": bio || "",
       ":timezone": timezone || "",
-      ":language": language || ""
+      ":language": language || "",
+      ":profileImage": profileImage || ""
     }
   }).promise();
 
@@ -153,7 +158,8 @@ exports.updateUserProfile = async (userId, data) => {
       jobTitle: user.jobTitle,
       bio: user.bio,
       timezone: user.timezone,
-      language: user.language
+      language: user.language,
+      profileImage: user.profileImage
     },
     process.env.JWT_SECRET,
     { expiresIn: "1h" }
@@ -163,5 +169,27 @@ exports.updateUserProfile = async (userId, data) => {
     token,
     user
   };
+};
+
+exports.getUserProfile = async (userId) => {
+  const result = await dynamoDb.get({
+    TableName: TABLE,
+    Key: { PK: userId }
+  }).promise();
+
+  if (!result.Item) {
+    throw new Error("User not found");
+  }
+
+  return result.Item;
+};
+
+exports.deleteUserProfile = async (userId) => {
+  await dynamoDb.delete({
+    TableName: TABLE,
+    Key: { PK: userId }
+  }).promise();
+
+  return true;
 };
 

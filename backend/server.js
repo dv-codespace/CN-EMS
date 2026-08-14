@@ -6,6 +6,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Auth service running on port ${PORT}`);
 });
-
-const eventRoutes = require("./src/routes/event.routes");
-app.use("/api", eventRoutes);

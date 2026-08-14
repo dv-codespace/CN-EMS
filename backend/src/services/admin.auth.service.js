@@ -56,7 +56,11 @@ exports.loginAdmin = async ({ email, password }) => {
   const token = jwt.sign(
     {
       adminID: admin.adminID,
-      role: "ADMIN"
+      role: "ADMIN",
+      name: admin.name,
+      phone: admin.phone,
+      bio: admin.bio,
+      profileImage: admin.profileImage
     },
     process.env.JWT_SECRET,
     { expiresIn: "2h" }
@@ -67,6 +71,71 @@ exports.loginAdmin = async ({ email, password }) => {
     token,
     role: "ADMIN",
     adminID: admin.adminID
+  };
+};
+
+exports.getAdminProfile = async (adminID) => {
+  const result = await dynamoDb.get({
+    TableName: TABLE,
+    Key: { adminID }
+  }).promise();
+
+  if (!result.Item) {
+    throw new Error("Admin not found");
+  }
+
+  return result.Item;
+};
+
+exports.updateAdminProfile = async (adminID, data) => {
+  const { name, phone, bio, profileImage } = data;
+
+  await dynamoDb.update({
+    TableName: TABLE,
+    Key: { adminID },
+    UpdateExpression: `
+      SET #name = :name,
+          #phone = :phone,
+          #bio = :bio,
+          #profileImage = :profileImage
+    `,
+    ExpressionAttributeNames: {
+      "#name": "name",
+      "#phone": "phone",
+      "#bio": "bio",
+      "#profileImage": "profileImage"
+    },
+    ExpressionAttributeValues: {
+      ":name": name || "",
+      ":phone": phone || "",
+      ":bio": bio || "",
+      ":profileImage": profileImage || ""
+    }
+  }).promise();
+
+  const updatedAdmin = await dynamoDb.get({
+    TableName: TABLE,
+    Key: { adminID }
+  }).promise();
+
+  const admin = updatedAdmin.Item;
+
+  const token = jwt.sign(
+    {
+      adminID: admin.adminID,
+      role: "ADMIN",
+      name: admin.name,
+      phone: admin.phone,
+      bio: admin.bio,
+      profileImage: admin.profileImage
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: "2h" }
+  );
+
+  return {
+    token,
+    admin
   };
 };
 

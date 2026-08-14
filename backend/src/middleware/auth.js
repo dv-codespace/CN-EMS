@@ -1,8 +1,7 @@
 const jwt = require("jsonwebtoken");
 
-const authUser = (req, res, next) => {
+const auth = (req, res, next) => {
   try {
-
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -12,20 +11,12 @@ const authUser = (req, res, next) => {
     }
 
     const token = authHeader.split(" ")[1];
-
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    // Only allow USER or ATTENDEE role
-    const role = decoded.role ? decoded.role.toUpperCase() : "";
-    if (role !== "USER" && role !== "ATTENDEE") {
-      return res.status(403).json({
-        message: "Access denied: User only"
-      });
-    }
 
     req.user = {
       userId: decoded.userId,
-      email: decoded.email
+      email: decoded.email,
+      role: decoded.role
     };
 
     next();
@@ -37,4 +28,4 @@ const authUser = (req, res, next) => {
   }
 };
 
-module.exports = authUser;
+module.exports = auth;

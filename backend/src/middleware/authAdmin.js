@@ -1,8 +1,7 @@
 const jwt = require("jsonwebtoken");
 
-const authUser = (req, res, next) => {
+const authAdmin = (req, res, next) => {
   try {
-
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -12,21 +11,14 @@ const authUser = (req, res, next) => {
     }
 
     const token = authHeader.split(" ")[1];
-
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
 
-    // Only allow USER or ATTENDEE role
-    const role = decoded.role ? decoded.role.toUpperCase() : "";
-    if (role !== "USER" && role !== "ATTENDEE") {
+    if (!decoded.role || decoded.role.toUpperCase() !== "ADMIN") {
       return res.status(403).json({
-        message: "Access denied: User only"
+        message: "Access denied: Admin only"
       });
     }
-
-    req.user = {
-      userId: decoded.userId,
-      email: decoded.email
-    };
 
     next();
 
@@ -37,4 +29,4 @@ const authUser = (req, res, next) => {
   }
 };
 
-module.exports = authUser;
+module.exports = authAdmin;
