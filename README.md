@@ -102,7 +102,61 @@ Evento is built using **cloud-native architecture principles**, focusing on:
 
 ---
 
-##  Project Status
+## 📁 Project Structure
+
+```text
+Evento/
+├── frontend/                        # Client-Side Application
+│   ├── index.html                   # Public Landing Page
+│   ├── auth.html                    # User & Organizer Login/Signup
+│   ├── auth-man.html                # Admin Login/Signup
+│   ├── index-man.html               # Admin Portal Landing
+│   │
+│   ├── pages/                       # Role-Specific Portals
+│   │   ├── user/                    # Attendee / User Portal (usr-*.html)
+│   │   ├── organizer/               # Organizer Portal (org-*.html)
+│   │   └── admin/                   # System Admin Portal (man-*.html)
+│   │
+│   ├── css/                         # Modular Stylesheets
+│   │   ├── common/                  # Base & Auth styles (index.css, auth.css)
+│   │   ├── user/                    # User portal styles (usr-*.css)
+│   │   ├── organizer/               # Organizer portal styles (org-*.css)
+│   │   └── admin/                   # Admin portal styles (man-*.css)
+│   │
+│   ├── js/                          # Modular Scripts
+│   │   ├── core/                    # Core modules (api.js, auth.js, index.js)
+│   │   ├── user/                    # User portal logic (usr-*.js)
+│   │   ├── organizer/               # Organizer logic (org-*.js, org-auth-helper.js)
+│   │   └── admin/                   # Admin logic (man-*.js, man-auth-helper.js)
+│   │
+│   └── assets/                      # Static Media & Graphics
+│       ├── icons/                   # Icons and SVG avatars
+│       └── media/                   # Videos and branding media
+│
+├── backend/                         # Cloud-Native REST API & Lambda Functions
+│   ├── src/
+│   │   ├── config/                  # dynamo.js
+│   │   ├── controllers/             # auth, admin.auth, event controllers
+│   │   ├── middleware/              # JWT RBAC middleware (authUser, authOrganizer, authAdmin)
+│   │   ├── routes/                  # Express route definitions
+│   │   ├── services/                # Business logic & DynamoDB operations
+│   │   ├── app.js                   # Express application setup
+│   │   └── handler.js               # Serverless AWS Lambda handler
+│   ├── .env
+│   ├── package.json
+│   ├── server.js                    # Local development runner
+│   └── serverless.yml               # AWS Serverless deployment config
+│
+├── docs/                            # Documentation & Architecture
+│   ├── diagrams/                    # System architecture & tech stack diagrams
+│   └── presentations/               # Review slides, literature survey, reports
+│
+└── README.md
+```
+
+---
+
+## 🚀 Project Status
 
 -  Zeroth Review Completed  
 -  UI & Authentication Module in Progress  

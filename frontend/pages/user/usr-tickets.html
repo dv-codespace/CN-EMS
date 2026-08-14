@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../assets/icons/icon-usr.png">
+    <title>My Tickets | Evento</title>
+    <link rel="stylesheet" href="../../css/user/usr-dashboard.css">
+    <link rel="stylesheet" href="../../css/user/usr-tickets.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-calendar-alt"></i>
+                <h2>Evento</h2>
+            </div>
+        </div>
+
+        <div class="user-profile">
+            <div class="avatar">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" alt="User">
+            </div>
+            <div class="user-info">
+                <h3>Alex Johnson</h3>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="usr-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="usr-upcoming.html"><i class="fas fa-calendar-check"></i> Upcoming Events</a></li>
+            <li><a href="usr-recommended.html"><i class="fas fa-star"></i> Explore Events</a></li>
+            <li><a href="usr-past.html"><i class="fas fa-history"></i> Past Events</a></li>
+            <li><a href="usr-tickets.html" class="active"><i class="fas fa-ticket-alt"></i> My Tickets</a></li>
+            <li><a href="usr-friends.html"><i class="fas fa-user-friends"></i> Friends</a></li>
+            <li><a href="usr-settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <div class="user-stats">
+                <div class="stat-item">
+                    <span class="stat-value">18</span>
+                    <span class="stat-label">Total Tickets</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">5</span>
+                    <span class="stat-label">Active</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="page-title">
+                <h1>My Tickets</h1>
+                <p id="currentDate">Monday, December 11, 2024</p>
+            </div>
+            
+            <div class="top-actions">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tickets..." id="searchInput">
+                </div>
+                <button class="action-btn notification-btn" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </button>
+                <button class="action-btn user-btn" id="logoutBtn" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Ticket Stats & Filters -->
+        <div class="tickets-header">
+            <!-- Ticket Stats -->
+            <div class="ticket-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalTickets">18</h3>
+                        <p>Total Tickets</p>
+                        <span class="trend up"><i class="fas fa-arrow-up"></i> 5 this month</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="activeTickets">5</h3>
+                        <p>Active Tickets</p>
+                        <span class="trend stable"><i class="fas fa-check-circle"></i> Valid</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="usedTickets">12</h3>
+                        <p>Tickets Used</p>
+                        <span class="trend up"><i class="fas fa-chart-line"></i> 78% used</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="digitalTickets">18</h3>
+                        <p>Digital Tickets</p>
+                        <span class="trend stable"><i class="fas fa-mobile-alt"></i> All mobile</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter & Sort Controls -->
+            <div class="ticket-controls">
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label for="statusFilter"><i class="fas fa-filter"></i> Status:</label>
+                        <select id="statusFilter" class="filter-select">
+                            <option value="all">All Tickets</option>
+                            <option value="active">Active</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="used">Used</option>
+                            <option value="cancelled">Cancelled</option>
+                            <option value="transferred">Transferred</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="typeFilter"><i class="fas fa-tag"></i> Type:</label>
+                        <select id="typeFilter" class="filter-select">
+                            <option value="all">All Types</option>
+                            <option value="general">General Admission</option>
+                            <option value="vip">VIP</option>
+                            <option value="early">Early Bird</option>
+                            <option value="group">Group</option>
+                            <option value="student">Student</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="sortFilter"><i class="fas fa-sort"></i> Sort by:</label>
+                        <select id="sortFilter" class="filter-select">
+                            <option value="date-desc">Date (Recent)</option>
+                            <option value="date-asc">Date (Oldest)</option>
+                            <option value="price">Price (High to Low)</option>
+                            <option value="event">Event Name</option>
+                        </select>
+                    </div>
+                    
+                    <button class="filter-reset" id="resetFilters">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="action-btn-primary" id="downloadAllTickets">
+                        <i class="fas fa-download"></i> Download All
+                    </button>
+                    <button class="action-btn-secondary" id="transferTicket">
+                        <i class="fas fa-exchange-alt"></i> Transfer Ticket
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Tickets Content -->
+        <div class="tickets-content">
+            <!-- Left Column - Tickets List -->
+            <div class="tickets-column">
+                <!-- Active Tickets -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-ticket-alt"></i> Active Tickets</h3>
+                        <span class="badge" id="activeBadge">5 tickets</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="ticket-list" id="activeTicketList">
+                            <!-- Ticket 1 -->
+                            <div class="ticket-item active" data-status="active" data-type="vip" data-event="tech">
+                                <div class="ticket-header">
+                                    <div class="ticket-status active">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Active</span>
+                                    </div>
+                                    <div class="ticket-actions">
+                                        <button class="icon-btn quick-view" title="Quick View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="icon-btn more-options" title="More Options">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="ticket-content">
+                                    <div class="ticket-event">
+                                        <div class="event-icon tech">
+                                            <i class="fas fa-laptop-code"></i>
+                                        </div>
+                                        <div class="event-details">
+                                            <h4>Tech Conference 2024</h4>
+                                            <p class="event-location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                Convention Center
+                                            </p>
+                                            <p class="event-date">
+                                                <i class="fas fa-calendar"></i>
+                                                Today, Dec 11 • 2:00 PM
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="ticket-details">
+                                        <div class="detail-row">
+                                            <div class="detail-item">
+                                                <span class="label">Ticket No:</span>
+                                                <span class="value">TC-2024-001234</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="label">Type:</span>
+                                                <span class="value vip">VIP Pass</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="label">Price:</span>
+                                                <span class="value">$199.00</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail-row">
+                                            <div class="detail-item">
+                                                <span class="label">Purchase Date:</span>
+                                                <span class="value">Dec 1, 2024</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="label">Seat:</span>
+                                                <span class="value">VIP-12</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="label">Order ID:</span>
+                                                <span class="value">ORD-789012</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="ticket-qr">
+                                        <div class="qr-code">
+                                            <div class="qr-placeholder">
+                                                <i class="fas fa-qrcode"></i>
+                                                <p>Scan for entry</p>
+                                            </div>
+                                        </div>
+                                        <div class="qr-info">
+                                            <p><i class="fas fa-info-circle"></i> QR code refreshes every 30 seconds for security</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ticket-footer">
+                                    <div class="ticket-actions-full">
+                                        <button class="btn-view-ticket">
+                                            <i class="fas fa-expand"></i> View Full Ticket
+                                        </button>
+                                        <button class="btn-download-ticket">
+                                            <i class="fas fa-download"></i> Download
+                                        </button>
+                                        <button class="btn-share-ticket">
+                                            <i class="fas fa-share-alt"></i> Share
+                                        </button>
+                                        <button class="btn-add-calendar">
+                                            <i class="fas fa-calendar-plus"></i> Add to Calendar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ticket 2 -->
+                            <div class="ticket-item active" data-status="active" data-type="general" data-event="music">
+                                <div class="ticket-header">
+                                    <div class="ticket-status active">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Active</span>
+                                    </div>
+                                    <div class="ticket-actions">
+                                        <button class="icon-btn quick-view" title="Quick View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="icon-btn more-options" title="More Options">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="ticket-content">
+                                    <div class="ticket-event">
+                                        <div class="event-icon music">
+                                            <i class="fas fa-music"></i>
+                                        </div>
+                                        <div class="event-details">
+                                            <h4>Summer Music Festival</h4>
+                                            <p class="event-location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                Central Park
+                                            </p>
+                                            <p class="event-date">
+                                                <i class="fas fa-calendar"></i>
+                                                Tomorrow, Dec 12 • 5:00 PM
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="ticket-details">
+                                        <div class="detail-row">
+                                            <div class="detail-item">
+                                                <span class="label">Ticket No:</span>
+                                                <span class="value">MF-2024-005678</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="label">Type:</span>
+                                                <span class="value general">General Admission</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="label">Price:</span>
+                                                <span class="value">$89.00</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail-row">
+                                            <div class="detail-item">
+                                                <span class="label">Purchase Date:</span>
+                                                <span class="value">Nov 25, 2024</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="label">Gate:</span>
+                                                <span class="value">Gate A</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="label">Order ID:</span>
+                                                <span class="value">ORD-789013</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="ticket-qr">
+                                        <div class="qr-code">
+                                            <div class="qr-placeholder">
+                                                <i class="fas fa-qrcode"></i>
+                                                <p>Scan for entry</p>
+                                            </div>
+                                        </div>
+                                        <div class="qr-info">
+                                            <p><i class="fas fa-info-circle"></i> QR code refreshes every 30 seconds for security</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ticket-footer">
+                                    <div class="ticket-actions-full">
+                                        <button class="btn-view-ticket">
+                                            <i class="fas fa-expand"></i> View Full Ticket
+                                        </button>
+                                        <button class="btn-download-ticket">
+                                            <i class="fas fa-download"></i> Download
+                                        </button>
+                                        <button class="btn-share-ticket">
+                                            <i class="fas fa-share-alt"></i> Share
+                                        </button>
+                                        <button class="btn-add-calendar">
+                                            <i class="fas fa-calendar-plus"></i> Add to Calendar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ticket 3 -->
+                            <div class="ticket-item upcoming" data-status="upcoming" data-type="early" data-event="food">
+                                <div class="ticket-header">
+                                    <div class="ticket-status upcoming">
+                                        <i class="fas fa-clock"></i>
+                                        <span>Upcoming</span>
+                                    </div>
+                                    <div class="ticket-actions">
+                                        <button class="icon-btn quick-view" title="Quick View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="icon-btn more-options" title="More Options">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="ticket-content">
+                                    <div class="ticket-event">
+                                        <div class="event-icon food">
+                                            <i class="fas fa-utensils"></i>
+                                        </div>
+                                        <div class="event-details">
+                                            <h4>Food & Wine Festival</h4>
+                                            <p class="event-location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                Downtown Square
+                                            </p>
+                                            <p class="event-date">
+                                                <i class="fas fa-calendar"></i>
+                                                Dec 15, 2024 • 12:00 PM
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="ticket-details">
+                                        <div class="detail-row">
+                                            <div class="detail-item">
+                                                <span class="label">Ticket No:</span>
+                                                <span class="value">FW-2024-003456</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="label">Type:</span>
+                                                <span class="value early">Early Bird</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="label">Price:</span>
+                                                <span class="value">$65.00</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail-row">
+                                            <div class="detail-item">
+                                                <span class="label">Purchase Date:</span>
+                                                <span class="value">Nov 30, 2024</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="label">Tasting Pass:</span>
+                                                <span class="value">Gold Level</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="label">Order ID:</span>
+                                                <span class="value">ORD-789014</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="ticket-qr">
+                                        <div class="qr-code">
+                                            <div class="qr-placeholder">
+                                                <i class="fas fa-qrcode"></i>
+                                                <p>Scan for entry</p>
+                                            </div>
+                                        </div>
+                                        <div class="qr-info">
+                                            <p><i class="fas fa-info-circle"></i> QR code will be available 24 hours before event</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ticket-footer">
+                                    <div class="ticket-actions-full">
+                                        <button class="btn-view-ticket">
+                                            <i class="fas fa-expand"></i> View Full Ticket
+                                        </button>
+                                        <button class="btn-download-ticket">
+                                            <i class="fas fa-download"></i> Download
+                                        </button>
+                                        <button class="btn-share-ticket">
+                                            <i class="fas fa-share-alt"></i> Share
+                                        </button>
+                                        <button class="btn-add-calendar">
+                                            <i class="fas fa-calendar-plus"></i> Add to Calendar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Used Tickets -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-history"></i> Used Tickets</h3>
+                        <span class="badge" id="usedBadge">12 tickets</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="ticket-grid" id="usedTicketGrid">
+                            <!-- Used Ticket 1 -->
+                            <div class="ticket-card used" data-status="used" data-type="vip" data-event="tech">
+                                <div class="ticket-card-header">
+                                    <div class="event-icon tech small">
+                                        <i class="fas fa-laptop-code"></i>
+                                    </div>
+                                    <div class="ticket-card-status used">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Used</span>
+                                    </div>
+                                </div>
+                                <div class="ticket-card-content">
+                                    <h5>Blockchain Summit</h5>
+                                    <p class="ticket-card-date">
+                                        <i class="fas fa-calendar"></i> Dec 10, 2024
+                                    </p>
+                                    <div class="ticket-card-details">
+                                        <div class="detail">
+                                            <span class="label">Type:</span>
+                                            <span class="value">VIP</span>
+                                        </div>
+                                        <div class="detail">
+                                            <span class="label">Price:</span>
+                                            <span class="value">$249.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ticket-card-footer">
+                                    <button class="btn-view-receipt">
+                                        <i class="fas fa-receipt"></i> Receipt
+                                    </button>
+                                    <button class="btn-review-event">
+                                        <i class="fas fa-star"></i> Review
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Used Ticket 2 -->
+                            <div class="ticket-card used" data-status="used" data-type="general" data-event="music">
+                                <div class="ticket-card-header">
+                                    <div class="event-icon music small">
+                                        <i class="fas fa-music"></i>
+                                    </div>
+                                    <div class="ticket-card-status used">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Used</span>
+                                    </div>
+                                </div>
+                                <div class="ticket-card-content">
+                                    <h5>Jazz Night Live</h5>
+                                    <p class="ticket-card-date">
+                                        <i class="fas fa-calendar"></i> Dec 5, 2024
+                                    </p>
+                                    <div class="ticket-card-details">
+                                        <div class="detail">
+                                            <span class="label">Type:</span>
+                                            <span class="value">General</span>
+                                        </div>
+                                        <div class="detail">
+                                            <span class="label">Price:</span>
+                                            <span class="value">$75.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ticket-card-footer">
+                                    <button class="btn-view-receipt">
+                                        <i class="fas fa-receipt"></i> Receipt
+                                    </button>
+                                    <button class="btn-review-event">
+                                        <i class="fas fa-star"></i> Review
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Used Ticket 3 -->
+                            <div class="ticket-card used" data-status="used" data-type="student" data-event="arts">
+                                <div class="ticket-card-header">
+                                    <div class="event-icon arts small">
+                                        <i class="fas fa-palette"></i>
+                                    </div>
+                                    <div class="ticket-card-status used">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Used</span>
+                                    </div>
+                                </div>
+                                <div class="ticket-card-content">
+                                    <h5>Art Exhibition</h5>
+                                    <p class="ticket-card-date">
+                                        <i class="fas fa-calendar"></i> Dec 3, 2024
+                                    </p>
+                                    <div class="ticket-card-details">
+                                        <div class="detail">
+                                            <span class="label">Type:</span>
+                                            <span class="value">Student</span>
+                                        </div>
+                                        <div class="detail">
+                                            <span class="label">Price:</span>
+                                            <span class="value">$25.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ticket-card-footer">
+                                    <button class="btn-view-receipt">
+                                        <i class="fas fa-receipt"></i> Receipt
+                                    </button>
+                                    <button class="btn-review-event">
+                                        <i class="fas fa-star"></i> Review
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="view-all-container">
+                            <a href="#" class="view-all-link">
+                                <i class="fas fa-history"></i> View All Used Tickets
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="tickets-column">
+                <!-- Ticket Wallet -->
+                <div class="card wallet-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-wallet"></i> Ticket Wallet</h3>
+                        <span class="badge">Balance: 5</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="wallet-balance">
+                            <div class="balance-item">
+                                <div class="balance-icon">
+                                    <i class="fas fa-ticket-alt"></i>
+                                </div>
+                                <div class="balance-info">
+                                    <span class="label">Active Tickets</span>
+                                    <span class="value">5</span>
+                                </div>
+                            </div>
+                            <div class="balance-item">
+                                <div class="balance-icon">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div class="balance-info">
+                                    <span class="label">Total Value</span>
+                                    <span class="value">$543.00</span>
+                                </div>
+                            </div>
+                            <div class="balance-item">
+                                <div class="balance-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div class="balance-info">
+                                    <span class="label">Next Event</span>
+                                    <span class="value">Tomorrow</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="wallet-actions">
+                            <button class="wallet-action-btn" id="addToWallet">
+                                <i class="fas fa-plus-circle"></i>
+                                <span>Add Ticket</span>
+                            </button>
+                            <button class="wallet-action-btn" id="walletBackup">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Backup</span>
+                            </button>
+                            <button class="wallet-action-btn" id="walletShare">
+                                <i class="fas fa-share"></i>
+                                <span>Share Wallet</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Access -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bolt"></i> Quick Access</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="quick-access-grid">
+                            <button class="quick-access-btn" id="quickDownload">
+                                <div class="access-icon">
+                                    <i class="fas fa-download"></i>
+                                </div>
+                                <div class="access-info">
+                                    <h5>Download All</h5>
+                                    <p>Get all tickets as PDF</p>
+                                </div>
+                            </button>
+                            
+                            <button class="quick-access-btn" id="quickPrint">
+                                <div class="access-icon">
+                                    <i class="fas fa-print"></i>
+                                </div>
+                                <div class="access-info">
+                                    <h5>Print Tickets</h5>
+                                    <p>Print selected tickets</p>
+                                </div>
+                            </button>
+                            
+                            <button class="quick-access-btn" id="quickTransfer">
+                                <div class="access-icon">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div>
+                                <div class="access-info">
+                                    <h5>Transfer</h5>
+                                    <p>Transfer to friend</p>
+                                </div>
+                            </button>
+                            
+                            <button class="quick-access-btn" id="quickSupport">
+                                <div class="access-icon">
+                                    <i class="fas fa-headset"></i>
+                                </div>
+                                <div class="access-info">
+                                    <h5>Support</h5>
+                                    <p>Ticket issues?</p>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Ticket Alerts -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bell"></i> Ticket Alerts</h3>
+                        <button class="btn-settings" id="alertSettings">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert-list">
+                            <div class="alert-item important">
+                                <div class="alert-icon">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </div>
+                                <div class="alert-content">
+                                    <h5>Tech Conference Today!</h5>
+                                    <p>Starts at 2:00 PM. Don't forget your ticket.</p>
+                                    <span class="alert-time">2 hours from now</span>
+                                </div>
+                            </div>
+                            
+                            <div class="alert-item">
+                                <div class="alert-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="alert-content">
+                                    <h5>Music Festival Tomorrow</h5>
+                                    <p>Entry starts at 4:30 PM for 5:00 PM show.</p>
+                                    <span class="alert-time">Tomorrow, 5:00 PM</span>
+                                </div>
+                            </div>
+                            
+                            <div class="alert-item">
+                                <div class="alert-icon">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                                <div class="alert-content">
+                                    <h5>Food Festival in 4 Days</h5>
+                                    <p>QR code will be available 24 hours before.</p>
+                                    <span class="alert-time">Dec 15, 12:00 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert-footer">
+                            <button class="btn-dismiss-all" id="dismissAllAlerts">
+                                <i class="fas fa-check-double"></i> Dismiss All
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ticket Tips -->
+                <div class="card tips-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-lightbulb"></i> Ticket Tips</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="tip-item">
+                            <div class="tip-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="tip-content">
+                                <h5>Save to Phone</h5>
+                                <p>Add tickets to your phone's wallet for offline access.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tip-item">
+                            <div class="tip-icon">
+                                <i class="fas fa-battery-full"></i>
+                            </div>
+                            <div class="tip-content">
+                                <h5>Check Battery</h5>
+                                <p>Ensure your phone is charged before heading to events.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tip-item">
+                            <div class="tip-icon">
+                                <i class="fas fa-screenshot"></i>
+                            </div>
+                            <div class="tip-content">
+                                <h5>Screenshots Work</h5>
+                                <p>Take screenshots as backup if you have connectivity issues.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-state-content">
+                <i class="fas fa-ticket-alt"></i>
+                <h3>No Tickets Yet</h3>
+                <p>You haven't purchased any tickets yet. Start exploring events to book your first ticket!</p>
+                <button class="btn-primary" id="exploreEventsBtn">
+                    <i class="fas fa-search"></i> Explore Events
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Ticket Summary</h4>
+                    <div class="footer-stats">
+                        <div class="footer-stat">
+                            <span class="value" id="footerTotalTickets">18</span>
+                            <span class="label">Total</span>
+                        </div>
+                        <div class="footer-stat">
+                            <span class="value" id="footerActiveTickets">5</span>
+                            <span class="label">Active</span>
+                        </div>
+                        <div class="footer-stat">
+                            <span class="value" id="footerUsedTickets">12</span>
+                            <span class="label">Used</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Evento</h4>
+                    <p>Your gateway to amazing experiences</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Evento. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Notification Panel -->
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <button class="close-notifications" id="closeNotifications">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notification-list">
+            <div class="notification-item unread">
+                <div class="notification-icon">
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+                <div class="notification-content">
+                    <h4>Ticket Activated</h4>
+                    <p>Your Tech Conference ticket is now active</p>
+                    <span class="notification-time">2 hours ago</span>
+                </div>
+            </div>
+            <div class="notification-item unread">
+                <div class="notification-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="notification-content">
+                    <h4>Event Reminder</h4>
+                    <p>Tech Conference starts in 3 hours</p>
+                    <span class="notification-time">1 hour ago</span>
+                </div>
+            </div>
+        </div>
+        <div class="notification-footer">
+            <button class="mark-all-read" id="markAllRead">
+                <i class="fas fa-check-double"></i>
+                Mark All as Read
+            </button>
+        </div>
+    </div>
+
+    <!-- Ticket Modal -->
+    <div class="modal-overlay" id="ticketModal">
+        <div class="modal-content ticket-modal">
+            <div class="modal-header">
+                <h3 id="modalTicketTitle">Ticket Details</h3>
+                <button class="modal-close" id="closeTicketModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalTicketContent">
+                <!-- Filled by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Transfer Modal -->
+    <div class="modal-overlay" id="transferModal">
+        <div class="modal-content transfer-modal">
+            <div class="modal-header">
+                <h3>Transfer Ticket</h3>
+                <button class="modal-close" id="closeTransferModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="transfer-form">
+                    <div class="form-group">
+                        <label for="selectTicket">Select Ticket</label>
+                        <select id="selectTicket" class="form-select">
+                            <option value="">Choose a ticket to transfer</option>
+                            <option value="tech-conf">Tech Conference 2024</option>
+                            <option value="music-fest">Summer Music Festival</option>
+                            <option value="food-fest">Food & Wine Festival</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="recipientEmail">Recipient Email</label>
+                        <input type="email" id="recipientEmail" placeholder="Enter recipient's email" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transferMessage">Message (Optional)</label>
+                        <textarea id="transferMessage" placeholder="Add a personal message..." rows="3" class="form-textarea"></textarea>
+                    </div>
+                    
+                    <div class="transfer-info">
+                        <div class="info-item">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Ticket transfers are free and can be done once per ticket</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Transfer must be completed at least 24 hours before the event</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn-cancel" id="cancelTransfer">Cancel</button>
+                        <button class="btn-transfer" id="submitTransfer">Transfer Ticket</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/user/usr-dashboard.js"></script>
+    <script src="../../js/user/usr-tickets.js"></script>
+</body>
+</html>

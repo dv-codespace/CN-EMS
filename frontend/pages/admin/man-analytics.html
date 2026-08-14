@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../assets/icons/icon-man.png">
+    <title>System Analytics | Evento Admin</title>
+    <link rel="stylesheet" href="../../css/admin/man-dashboard.css">
+    <link rel="stylesheet" href="../../css/admin/man-analytics.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-calendar-alt"></i>
+                <h2>Evento<br>Admin</h2>
+            </div>
+        </div>
+
+        <div class="user-profile">
+            <div class="avatar">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Admin" alt="Admin">
+            </div>
+            <div class="user-info">
+                <h3>Admin User</h3>
+                <p>System Administrator</p>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="man-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="man-userman.html"><i class="fas fa-users"></i> User Management</a></li>
+            <li><a href="man-org.html"><i class="fas fa-user-tie"></i> Organizers</a></li>
+            <li><a href="man-alleve.html"><i class="fas fa-calendar-check"></i> All Events</a></li>
+            <li><a href="man-categories.html"><i class="fas fa-tags"></i> Categories</a></li>
+            <li><a href="man-analytics.html" class="active"><i class="fas fa-chart-line"></i> System Analytics</a></li>
+            <li><a href="man-reports.html"><i class="fas fa-file-alt"></i> Reports</a></li>
+            <li><a href="man-transactions.html"><i class="fas fa-credit-card"></i> Transactions</a></li>
+            <li><a href="man-settings.html"><i class="fas fa-sliders-h"></i> System Settings</a></li>
+            <li><a href="man-auditlogs.html"><i class="fas fa-clipboard-list"></i> Audit Logs</a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="#" class="quick-switch">
+                <i class="fas fa-exchange-alt"></i>
+                Switch to Organizer View
+            </a>
+            <div class="system-status">
+                <div class="status-indicator online"></div>
+                <span>System Online</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="page-title">
+                <h1>System Analytics</h1>
+                <p id="currentDate">Performance Metrics & Usage Statistics</p>
+            </div>
+            
+            <div class="top-actions">
+                <div class="quick-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search analytics..." id="analyticsSearch">
+                </div>
+                <div class="time-range-selector">
+                    <select id="timeRange">
+                        <option value="today">Today</option>
+                        <option value="week" selected>This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="quarter">This Quarter</option>
+                        <option value="year">This Year</option>
+                        <option value="custom">Custom Range</option>
+                    </select>
+                </div>
+                <button class="action-btn" id="exportAnalyticsBtn">
+                    <i class="fas fa-download"></i>
+                    <span>Export</span>
+                </button>
+                <button class="action-btn" id="refreshAnalyticsBtn">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Refresh</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Analytics Overview Cards -->
+        <div class="analytics-overview">
+            <div class="overview-card">
+                <div class="overview-header">
+                    <h3><i class="fas fa-users"></i> User Analytics</h3>
+                    <span class="trend up"><i class="fas fa-arrow-up"></i> 12%</span>
+                </div>
+                <div class="overview-content">
+                    <div class="metric">
+                        <span class="metric-label">Total Users</span>
+                        <span class="metric-value">2,847</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Active Users (7d)</span>
+                        <span class="metric-value">1,254</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">New Users (7d)</span>
+                        <span class="metric-value">187</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Avg. Session</span>
+                        <span class="metric-value">8m 24s</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overview-card">
+                <div class="overview-header">
+                    <h3><i class="fas fa-calendar-alt"></i> Event Analytics</h3>
+                    <span class="trend up"><i class="fas fa-arrow-up"></i> 8%</span>
+                </div>
+                <div class="overview-content">
+                    <div class="metric">
+                        <span class="metric-label">Total Events</span>
+                        <span class="metric-value">2,184</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Active Events</span>
+                        <span class="metric-value">156</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">New Events (7d)</span>
+                        <span class="metric-value">42</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Avg. Attendance</span>
+                        <span class="metric-value">78%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overview-card">
+                <div class="overview-header">
+                    <h3><i class="fas fa-chart-line"></i> Performance</h3>
+                    <span class="trend up"><i class="fas fa-arrow-up"></i> 5%</span>
+                </div>
+                <div class="overview-content">
+                    <div class="metric">
+                        <span class="metric-label">Response Time</span>
+                        <span class="metric-value">142ms</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Uptime</span>
+                        <span class="metric-value">99.8%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">API Success Rate</span>
+                        <span class="metric-value">99.2%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Error Rate</span>
+                        <span class="metric-value">0.12%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overview-card">
+                <div class="overview-header">
+                    <h3><i class="fas fa-dollar-sign"></i> Revenue Analytics</h3>
+                    <span class="trend up"><i class="fas fa-arrow-up"></i> 24%</span>
+                </div>
+                <div class="overview-content">
+                    <div class="metric">
+                        <span class="metric-label">Total Revenue</span>
+                        <span class="metric-value">$245,890</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Revenue (7d)</span>
+                        <span class="metric-value">$18,450</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Avg. Ticket Price</span>
+                        <span class="metric-value">$45.20</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Conversion Rate</span>
+                        <span class="metric-value">3.8%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Analytics Charts -->
+        <div class="analytics-grid">
+            <!-- User Growth Chart -->
+            <div class="analytics-card wide-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-user-chart"></i> User Growth</h3>
+                    <div class="chart-controls">
+                        <select id="userGrowthMetric">
+                            <option value="total">Total Users</option>
+                            <option value="new">New Users</option>
+                            <option value="active">Active Users</option>
+                        </select>
+                        <select id="userGrowthPeriod">
+                            <option value="7d">Last 7 Days</option>
+                            <option value="30d">Last 30 Days</option>
+                            <option value="90d">Last 90 Days</option>
+                            <option value="1y">Last Year</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <div class="chart-placeholder" id="userGrowthChart">
+                            <div class="chart-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color total"></span>
+                                    <span>Total Users</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color new"></span>
+                                    <span>New Users</span>
+                                </div>
+                            </div>
+                            <div class="chart-bars">
+                                <!-- Chart bars will be generated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Statistics Chart -->
+            <div class="analytics-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-pie"></i> Event Categories</h3>
+                    <div class="chart-controls">
+                        <select id="eventCategoryPeriod">
+                            <option value="month">This Month</option>
+                            <option value="quarter">This Quarter</option>
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <div class="pie-chart-placeholder" id="eventCategoriesChart">
+                            <div class="pie-chart">
+                                <div class="pie-segment" data-category="Music" data-value="35" style="--percentage: 35%; --color: #4f46e5;"></div>
+                                <div class="pie-segment" data-category="Technology" data-value="25" style="--percentage: 25%; --color: #10b981;"></div>
+                                <div class="pie-segment" data-category="Business" data-value="20" style="--percentage: 20%; --color: #f59e0b;"></div>
+                                <div class="pie-segment" data-category="Education" data-value="15" style="--percentage: 15%; --color: #06b6d4;"></div>
+                                <div class="pie-segment" data-category="Other" data-value="5" style="--percentage: 5%; --color: #8b5cf6;"></div>
+                            </div>
+                            <div class="pie-legend">
+                                <!-- Legend generated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Metrics -->
+            <div class="analytics-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-tachometer-alt"></i> System Performance</h3>
+                    <div class="chart-controls">
+                        <select id="performancePeriod">
+                            <option value="24h">Last 24 Hours</option>
+                            <option value="7d" selected>Last 7 Days</option>
+                            <option value="30d">Last 30 Days</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="performance-metrics">
+                        <div class="metric-item">
+                            <div class="metric-header">
+                                <h4>Response Time</h4>
+                                <span class="metric-value good">142ms</span>
+                            </div>
+                            <div class="metric-chart">
+                                <div class="chart-bar" style="width: 85%;"></div>
+                            </div>
+                            <div class="metric-trend">
+                                <span class="trend up"><i class="fas fa-arrow-up"></i> 8% faster</span>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-item">
+                            <div class="metric-header">
+                                <h4>API Success Rate</h4>
+                                <span class="metric-value good">99.2%</span>
+                            </div>
+                            <div class="metric-chart">
+                                <div class="chart-bar" style="width: 92%;"></div>
+                            </div>
+                            <div class="metric-trend">
+                                <span class="trend up"><i class="fas fa-arrow-up"></i> 0.8% better</span>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-item">
+                            <div class="metric-header">
+                                <h4>Server Uptime</h4>
+                                <span class="metric-value good">99.8%</span>
+                            </div>
+                            <div class="metric-chart">
+                                <div class="chart-bar" style="width: 98%;"></div>
+                            </div>
+                            <div class="metric-trend">
+                                <span class="trend stable"><i class="fas fa-minus"></i> stable</span>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-item">
+                            <div class="metric-header">
+                                <h4>Error Rate</h4>
+                                <span class="metric-value low">0.12%</span>
+                            </div>
+                            <div class="metric-chart">
+                                <div class="chart-bar" style="width: 12%;"></div>
+                            </div>
+                            <div class="metric-trend">
+                                <span class="trend down"><i class="fas fa-arrow-down"></i> 3% lower</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Revenue Trend Chart -->
+            <div class="analytics-card wide-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-money-bill-wave"></i> Revenue Trends</h3>
+                    <div class="chart-controls">
+                        <select id="revenueMetric">
+                            <option value="total">Total Revenue</option>
+                            <option value="average">Average Revenue</option>
+                            <option value="tickets">Ticket Sales</option>
+                        </select>
+                        <select id="revenuePeriod">
+                            <option value="month">Last Month</option>
+                            <option value="quarter" selected>Last Quarter</option>
+                            <option value="year">Last Year</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <div class="chart-placeholder" id="revenueTrendChart">
+                            <div class="chart-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color revenue"></span>
+                                    <span>Revenue</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color tickets"></span>
+                                    <span>Ticket Sales</span>
+                                </div>
+                            </div>
+                            <div class="line-chart">
+                                <!-- Line chart will be generated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Geographic Distribution -->
+            <div class="analytics-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-globe-americas"></i> Geographic Distribution</h3>
+                    <div class="chart-controls">
+                        <select id="geoMetric">
+                            <option value="users">Users</option>
+                            <option value="events" selected>Events</option>
+                            <option value="revenue">Revenue</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="geo-distribution">
+                        <div class="region">
+                            <div class="region-name">North America</div>
+                            <div class="region-bar">
+                                <div class="bar-fill" style="width: 45%;"></div>
+                            </div>
+                            <div class="region-value">45%</div>
+                        </div>
+                        <div class="region">
+                            <div class="region-name">Europe</div>
+                            <div class="region-bar">
+                                <div class="bar-fill" style="width: 30%;"></div>
+                            </div>
+                            <div class="region-value">30%</div>
+                        </div>
+                        <div class="region">
+                            <div class="region-name">Asia Pacific</div>
+                            <div class="region-bar">
+                                <div class="bar-fill" style="width: 15%;"></div>
+                            </div>
+                            <div class="region-value">15%</div>
+                        </div>
+                        <div class="region">
+                            <div class="region-name">Other</div>
+                            <div class="region-bar">
+                                <div class="bar-fill" style="width: 10%;"></div>
+                            </div>
+                            <div class="region-value">10%</div>
+                        </div>
+                    </div>
+                    <div class="geo-stats">
+                        <div class="geo-stat">
+                            <span class="stat-label">Top Country</span>
+                            <span class="stat-value">United States</span>
+                        </div>
+                        <div class="geo-stat">
+                            <span class="stat-label">Top City</span>
+                            <span class="stat-value">New York</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Device & Platform Analytics -->
+            <div class="analytics-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-laptop"></i> Device & Platform</h3>
+                    <div class="chart-controls">
+                        <select id="devicePeriod">
+                            <option value="7d">Last 7 Days</option>
+                            <option value="30d" selected>Last 30 Days</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="device-breakdown">
+                        <div class="device-category">
+                            <div class="device-label">Mobile</div>
+                            <div class="device-bar">
+                                <div class="bar-fill mobile" style="width: 52%;"></div>
+                            </div>
+                            <div class="device-value">52%</div>
+                        </div>
+                        <div class="device-category">
+                            <div class="device-label">Desktop</div>
+                            <div class="device-bar">
+                                <div class="bar-fill desktop" style="width: 38%;"></div>
+                            </div>
+                            <div class="device-value">38%</div>
+                        </div>
+                        <div class="device-category">
+                            <div class="device-label">Tablet</div>
+                            <div class="device-bar">
+                                <div class="bar-fill tablet" style="width: 10%;"></div>
+                            </div>
+                            <div class="device-value">10%</div>
+                        </div>
+                    </div>
+                    <div class="platform-breakdown">
+                        <div class="platform-item">
+                            <span class="platform-name">Chrome</span>
+                            <span class="platform-value">48%</span>
+                        </div>
+                        <div class="platform-item">
+                            <span class="platform-name">Safari</span>
+                            <span class="platform-value">25%</span>
+                        </div>
+                        <div class="platform-item">
+                            <span class="platform-name">Firefox</span>
+                            <span class="platform-value">15%</span>
+                        </div>
+                        <div class="platform-item">
+                            <span class="platform-name">Other</span>
+                            <span class="platform-value">12%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Usage Analytics -->
+            <div class="analytics-card wide-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-code"></i> API Usage & Performance</h3>
+                    <div class="chart-controls">
+                        <select id="apiPeriod">
+                            <option value="24h">Last 24 Hours</option>
+                            <option value="7d" selected>Last 7 Days</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="api-metrics">
+                        <div class="api-metric">
+                            <div class="api-metric-header">
+                                <h4>Total Requests</h4>
+                                <span class="api-metric-value">2.8M</span>
+                            </div>
+                            <div class="api-metric-trend">
+                                <span class="trend up"><i class="fas fa-arrow-up"></i> 15%</span>
+                                <span>vs last week</span>
+                            </div>
+                        </div>
+                        <div class="api-metric">
+                            <div class="api-metric-header">
+                                <h4>Avg. Response Time</h4>
+                                <span class="api-metric-value good">142ms</span>
+                            </div>
+                            <div class="api-metric-trend">
+                                <span class="trend up"><i class="fas fa-arrow-up"></i> 8% faster</span>
+                            </div>
+                        </div>
+                        <div class="api-metric">
+                            <div class="api-metric-header">
+                                <h4>Peak Load</h4>
+                                <span class="api-metric-value">1,248/s</span>
+                            </div>
+                            <div class="api-metric-trend">
+                                <span class="trend up"><i class="fas fa-arrow-up"></i> 12% higher</span>
+                            </div>
+                        </div>
+                        <div class="api-metric">
+                            <div class="api-metric-header">
+                                <h4>Error Rate</h4>
+                                <span class="api-metric-value low">0.12%</span>
+                            </div>
+                            <div class="api-metric-trend">
+                                <span class="trend down"><i class="fas fa-arrow-down"></i> 3% lower</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-endpoints">
+                        <h4>Top API Endpoints</h4>
+                        <div class="endpoint-list">
+                            <div class="endpoint-item">
+                                <span class="endpoint-name">GET /api/events</span>
+                                <span class="endpoint-requests">450k</span>
+                            </div>
+                            <div class="endpoint-item">
+                                <span class="endpoint-name">POST /api/auth/login</span>
+                                <span class="endpoint-requests">320k</span>
+                            </div>
+                            <div class="endpoint-item">
+                                <span class="endpoint-name">GET /api/users/profile</span>
+                                <span class="endpoint-requests">280k</span>
+                            </div>
+                            <div class="endpoint-item">
+                                <span class="endpoint-name">POST /api/tickets/purchase</span>
+                                <span class="endpoint-requests">190k</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Export & Actions -->
+        <div class="analytics-actions">
+            <div class="action-buttons">
+                <button class="action-btn" id="generateReportBtn">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Generate PDF Report</span>
+                </button>
+                <button class="action-btn" id="exportCSVBtn">
+                    <i class="fas fa-file-csv"></i>
+                    <span>Export CSV Data</span>
+                </button>
+                <button class="action-btn" id="scheduleReportBtn">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Schedule Report</span>
+                </button>
+            </div>
+            <div class="last-updated">
+                <i class="fas fa-clock"></i>
+                <span>Last updated: <span id="lastUpdateTime">Just now</span></span>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/admin/man-auth-helper.js"></script>
+    <script src="../../js/admin/man-dashboard.js"></script>
+    <script src="../../js/admin/man-analytics.js"></script>
+</body>
+</html>

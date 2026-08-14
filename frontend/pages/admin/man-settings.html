@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../assets/icons/icon-man.png">
+    <title>System Settings | Evento Admin</title>
+    <link rel="stylesheet" href="../../css/admin/man-dashboard.css">
+    <link rel="stylesheet" href="../../css/admin/man-settings.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-calendar-alt"></i>
+                <h2>Evento <br>Admin</h2>
+            </div>
+        </div>
+
+        <div class="user-profile">
+            <div class="avatar">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Admin" alt="Admin">
+            </div>
+            <div class="user-info">
+                <h3>Admin User</h3>
+                <p>System Administrator</p>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="man-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="man-userman.html"><i class="fas fa-users"></i> User Management</a></li>
+            <li><a href="man-org.html"><i class="fas fa-user-tie"></i> Organizers</a></li>
+            <li><a href="man-alleve.html"><i class="fas fa-calendar-check"></i> All Events</a></li>
+            <li><a href="man-categories.html"><i class="fas fa-tags"></i> Categories</a></li>
+            <li><a href="man-analytics.html"><i class="fas fa-chart-line"></i> System Analytics</a></li>
+            <li><a href="man-reports.html"><i class="fas fa-file-alt"></i> Reports</a></li>
+            <li><a href="man-transactions.html"><i class="fas fa-credit-card"></i> Transactions</a></li>
+            <li><a href="man-settings.html" class="active"><i class="fas fa-sliders-h"></i> System Settings</a></li>
+            <li><a href="man-auditlogs.html"><i class="fas fa-clipboard-list"></i> Audit Logs</a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="#" class="quick-switch">
+                <i class="fas fa-exchange-alt"></i>
+                Switch to Organizer View
+            </a>
+            <div class="system-status">
+                <div class="status-indicator online"></div>
+                <span>System Online</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="page-title">
+                <h1>System Settings</h1>
+                <p id="currentDate">Configure and manage system-wide settings</p>
+            </div>
+            
+            <div class="top-actions">
+                <div class="quick-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search settings..." id="settingsSearch">
+                </div>
+                <button class="action-btn" id="saveAllBtn">
+                    <i class="fas fa-save"></i>
+                    <span>Save All</span>
+                </button>
+                <button class="action-btn" id="refreshSettingsBtn">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Refresh</span>
+                </button>
+                <button class="action-btn danger-btn" id="resetDefaultsBtn">
+                    <i class="fas fa-redo"></i>
+                    <span>Reset Defaults</span>
+                </button>
+            </div>
+        </header>
+        <br>
+        <!-- Settings Navigation -->
+        <div class="settings-navigation">
+            <br>
+            <div class="settings-tabs" id="settingsTabs">
+                <button class="settings-tab active" data-tab="general">
+                    <i class="fas fa-cog"></i>
+                    <span>General</span>
+                </button>
+                <button class="settings-tab" data-tab="security">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Security</span>
+                </button>
+                <button class="settings-tab" data-tab="payment">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payment</span>
+                </button>
+                <button class="settings-tab" data-tab="email">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email & Notifications</span>
+                </button>
+                <button class="settings-tab" data-tab="api">
+                    <i class="fas fa-code"></i>
+                    <span>API & Integrations</span>
+                </button>
+                <button class="settings-tab" data-tab="performance">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Performance</span>
+                </button>
+                <button class="settings-tab" data-tab="backup">
+                    <i class="fas fa-database"></i>
+                    <span>Backup & Maintenance</span>
+                </button>
+                <button class="settings-tab" data-tab="advanced">
+                    <i class="fas fa-wrench"></i>
+                    <span>Advanced</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Settings Content -->
+        <div class="settings-content">
+            <!-- General Settings -->
+            <div class="settings-section active" id="generalSection">
+                <div class="section-header">
+                    <h3><i class="fas fa-cog"></i> General Settings</h3>
+                    <p>Basic system configuration and preferences</p>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-user-cog"></i> Administrator Profile</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="profile-avatar-container" style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 20px;">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Admin" alt="Admin Avatar" id="adminAvatarPreview" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-color);">
+                                <div style="display: flex; gap: 10px;">
+                                    <button class="action-btn" id="changeAdminPhotoBtn" type="button" style="padding: 8px 16px; font-size: 14px;">
+                                        <i class="fas fa-camera"></i> Change Photo
+                                    </button>
+                                    <button class="action-btn" id="removeAdminPhotoBtn" type="button" style="padding: 8px 16px; font-size: 14px; background-color: #ef4444; color: white;">
+                                        <i class="fas fa-trash"></i> Remove
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="adminNameInput">Full Name</label>
+                                <input type="text" id="adminNameInput" value="Admin User" placeholder="Admin Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="adminPhoneInput">Phone Number</label>
+                                <input type="text" id="adminPhoneInput" value="" placeholder="Phone Number">
+                            </div>
+                            <div class="form-group">
+                                <label for="adminBioInput">Bio</label>
+                                <textarea id="adminBioInput" placeholder="Brief bio..." style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 10px; font-family: inherit; resize: vertical; min-height: 80px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-globe"></i> System Information</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="systemName">System Name</label>
+                                <input type="text" id="systemName" value="Evento Platform" placeholder="Enter system name">
+                                <small class="helper-text">Display name for your platform</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="systemUrl">System URL</label>
+                                <input type="url" id="systemUrl" value="https://evento.example.com" placeholder="https://your-domain.com">
+                                <small class="helper-text">Base URL for your platform</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="systemTimezone">Timezone</label>
+                                <select id="systemTimezone">
+                                    <option value="UTC">UTC</option>
+                                    <option value="America/New_York" selected>America/New York (EST)</option>
+                                    <option value="America/Chicago">America/Chicago (CST)</option>
+                                    <option value="America/Denver">America/Denver (MST)</option>
+                                    <option value="America/Los_Angeles">America/Los Angeles (PST)</option>
+                                    <option value="Europe/London">Europe/London (GMT)</option>
+                                    <option value="Europe/Paris">Europe/Paris (CET)</option>
+                                    <option value="Asia/Tokyo">Asia/Tokyo (JST)</option>
+                                    <option value="Asia/Dubai">Asia/Dubai (GST)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="defaultLanguage">Default Language</label>
+                                <select id="defaultLanguage">
+                                    <option value="en" selected>English</option>
+                                    <option value="es">Spanish</option>
+                                    <option value="fr">French</option>
+                                    <option value="de">German</option>
+                                    <option value="zh">Chinese</option>
+                                    <option value="ja">Japanese</option>
+                                    <option value="ar">Arabic</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-calendar-alt"></i> Date & Time Format</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="dateFormat">Date Format</label>
+                                <select id="dateFormat">
+                                    <option value="MM/DD/YYYY">MM/DD/YYYY (US)</option>
+                                    <option value="DD/MM/YYYY">DD/MM/YYYY (European)</option>
+                                    <option value="YYYY-MM-DD" selected>YYYY-MM-DD (ISO)</option>
+                                    <option value="MMM DD, YYYY">MMM DD, YYYY</option>
+                                    <option value="DD MMM, YYYY">DD MMM, YYYY</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="timeFormat">Time Format</label>
+                                <select id="timeFormat">
+                                    <option value="12h" selected>12-hour (AM/PM)</option>
+                                    <option value="24h">24-hour</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="weekStartDay">Week Starts On</label>
+                                <select id="weekStartDay">
+                                    <option value="0">Sunday</option>
+                                    <option value="1" selected>Monday</option>
+                                    <option value="6">Saturday</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-palette"></i> Theme & Appearance</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="themeMode">Theme Mode</label>
+                                <select id="themeMode">
+                                    <option value="light" selected>Light</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="auto">Auto (System)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="primaryColor">Primary Color</label>
+                                <div class="color-picker">
+                                    <input type="color" id="primaryColor" value="#4f46e5">
+                                    <span class="color-value">#4f46e5</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="logoUpload">System Logo</label>
+                                <div class="file-upload">
+                                    <div class="upload-preview">
+                                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Evento" alt="Current Logo" id="logoPreview">
+                                        <div class="upload-controls">
+                                            <button type="button" class="upload-btn" id="uploadLogoBtn">
+                                                <i class="fas fa-upload"></i>
+                                                Upload New
+                                            </button>
+                                            <input type="file" id="logoUpload" accept="image/*" style="display: none;">
+                                            <button type="button" class="remove-btn" id="removeLogoBtn">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="faviconUpload">Favicon</label>
+                                <div class="file-upload">
+                                    <div class="upload-preview">
+                                        <img src="../../assets/icons/icon-man.png" alt="Current Favicon" id="faviconPreview">
+                                        <div class="upload-controls">
+                                            <button type="button" class="upload-btn" id="uploadFaviconBtn">
+                                                <i class="fas fa-upload"></i>
+                                                Upload
+                                            </button>
+                                            <input type="file" id="faviconUpload" accept="image/*" style="display: none;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-user-plus"></i> Registration Settings</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="allowRegistration" checked>
+                                    <label for="allowRegistration">Allow new user registration</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="emailVerification" checked>
+                                    <label for="emailVerification">Require email verification</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="adminApproval" checked>
+                                    <label for="adminApproval">Require admin approval for organizers</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="defaultUserRole">Default User Role</label>
+                                <select id="defaultUserRole">
+                                    <option value="user" selected>Regular User</option>
+                                    <option value="organizer">Organizer</option>
+                                    <option value="viewer">Viewer Only</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="minPasswordLength">Minimum Password Length</label>
+                                <div class="range-input">
+                                    <input type="range" id="minPasswordLength" min="6" max="20" value="8">
+                                    <span class="range-value" id="passwordLengthValue">8 characters</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Settings -->
+            <div class="settings-section" id="securitySection">
+                <div class="section-header">
+                    <h3><i class="fas fa-shield-alt"></i> Security Settings</h3>
+                    <p>Configure security policies and authentication</p>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-lock"></i> Authentication</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="sessionTimeout">Session Timeout</label>
+                                <select id="sessionTimeout">
+                                    <option value="15">15 minutes</option>
+                                    <option value="30">30 minutes</option>
+                                    <option value="60" selected>1 hour</option>
+                                    <option value="120">2 hours</option>
+                                    <option value="240">4 hours</option>
+                                    <option value="480">8 hours</option>
+                                    <option value="0">Until browser closes</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="maxLoginAttempts">Max Failed Login Attempts</label>
+                                <select id="maxLoginAttempts">
+                                    <option value="3">3 attempts</option>
+                                    <option value="5" selected>5 attempts</option>
+                                    <option value="10">10 attempts</option>
+                                    <option value="15">15 attempts</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="lockoutDuration">Account Lockout Duration</label>
+                                <select id="lockoutDuration">
+                                    <option value="5">5 minutes</option>
+                                    <option value="15" selected>15 minutes</option>
+                                    <option value="30">30 minutes</option>
+                                    <option value="60">1 hour</option>
+                                    <option value="1440">24 hours</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="requireStrongPasswords" checked>
+                                    <label for="requireStrongPasswords">Require strong passwords</label>
+                                </div>
+                                <small class="helper-text">Must include uppercase, lowercase, numbers, and symbols</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="passwordExpiry" checked>
+                                    <label for="passwordExpiry">Enable password expiry</label>
+                                </div>
+                                <div class="sub-option" id="passwordExpiryOptions">
+                                    <label for="passwordExpiryDays">Expire after:</label>
+                                    <select id="passwordExpiryDays">
+                                        <option value="30">30 days</option>
+                                        <option value="60">60 days</option>
+                                        <option value="90" selected>90 days</option>
+                                        <option value="180">180 days</option>
+                                        <option value="365">365 days</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-user-shield"></i> Two-Factor Authentication</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enable2FA" checked>
+                                    <label for="enable2FA">Enable 2FA for administrators</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enable2FAUsers">
+                                    <label for="enable2FAUsers">Enable 2FA for all users</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="2FAMethods">Allowed 2FA Methods</label>
+                                <div class="checkbox-list">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="2faAuthenticator" checked>
+                                        <label for="2faAuthenticator">Authenticator App (TOTP)</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="2faSMS">
+                                        <label for="2faSMS">SMS</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="2faEmail">
+                                        <label for="2faEmail">Email</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="2faBackupCodes" checked>
+                                        <label for="2faBackupCodes">Backup Codes</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="backupCodeCount">Number of Backup Codes</label>
+                                <select id="backupCodeCount">
+                                    <option value="5">5 codes</option>
+                                    <option value="10" selected>10 codes</option>
+                                    <option value="15">15 codes</option>
+                                    <option value="20">20 codes</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-network-wired"></i> IP Security</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="allowedIPs">Allowed IP Addresses (Admin Only)</label>
+                                <textarea id="allowedIPs" rows="4" placeholder="Enter IP addresses, one per line&#10;Example:&#10;192.168.1.1&#10;10.0.0.0/24"></textarea>
+                                <small class="helper-text">Leave empty to allow from any IP</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="blockedIPs">Blocked IP Addresses</label>
+                                <textarea id="blockedIPs" rows="4" placeholder="Enter IP addresses to block"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableIPWhitelist">
+                                    <label for="enableIPWhitelist">Enable IP whitelist for admin panel</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="geoBlocking">
+                                    <label for="geoBlocking">Enable geographic blocking</label>
+                                </div>
+                                <div class="sub-option" id="geoBlockingOptions">
+                                    <label for="blockedCountries">Blocked Countries:</label>
+                                    <select id="blockedCountries" multiple>
+                                        <option value="CN">China</option>
+                                        <option value="RU">Russia</option>
+                                        <option value="KP">North Korea</option>
+                                        <option value="IR">Iran</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-file-shield"></i> Security Headers</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableCSP" checked>
+                                    <label for="enableCSP">Enable Content Security Policy (CSP)</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableHSTS" checked>
+                                    <label for="enableHSTS">Enable HTTP Strict Transport Security (HSTS)</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableXSSProtection" checked>
+                                    <label for="enableXSSProtection">Enable XSS Protection</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableFrameOptions" checked>
+                                    <label for="enableFrameOptions">Enable Frame Options (X-Frame-Options)</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableReferrerPolicy" checked>
+                                    <label for="enableReferrerPolicy">Enable Referrer Policy</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="securityScanBtn">Security Scan</label>
+                                <button type="button" class="action-btn" id="securityScanBtn">
+                                    <i class="fas fa-shield-virus"></i>
+                                    Run Security Scan
+                                </button>
+                                <small class="helper-text">Check system for security vulnerabilities</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Settings -->
+            <div class="settings-section" id="paymentSection">
+                <div class="section-header">
+                    <h3><i class="fas fa-credit-card"></i> Payment Settings</h3>
+                    <p>Configure payment gateways and transaction settings</p>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-university"></i> Payment Gateway</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="paymentMode">Payment Mode</label>
+                                <select id="paymentMode">
+                                    <option value="sandbox">Sandbox/Test Mode</option>
+                                    <option value="live" selected>Live/Production Mode</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="defaultCurrency">Default Currency</label>
+                                <select id="defaultCurrency">
+                                    <option value="USD" selected>US Dollar (USD)</option>
+                                    <option value="EUR">Euro (EUR)</option>
+                                    <option value="GBP">British Pound (GBP)</option>
+                                    <option value="JPY">Japanese Yen (JPY)</option>
+                                    <option value="CAD">Canadian Dollar (CAD)</option>
+                                    <option value="AUD">Australian Dollar (AUD)</option>
+                                    <option value="INR">Indian Rupee (INR)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="supportedCurrencies">Supported Currencies</label>
+                                <select id="supportedCurrencies" multiple>
+                                    <option value="USD" selected>USD</option>
+                                    <option value="EUR" selected>EUR</option>
+                                    <option value="GBP" selected>GBP</option>
+                                    <option value="CAD">CAD</option>
+                                    <option value="AUD">AUD</option>
+                                    <option value="JPY">JPY</option>
+                                    <option value="INR">INR</option>
+                                    <option value="CNY">CNY</option>
+                                </select>
+                                <small class="helper-text">Hold Ctrl/Cmd to select multiple</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="autoCurrencyConversion" checked>
+                                    <label for="autoCurrencyConversion">Enable auto currency conversion</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="exchangeRateProvider">Exchange Rate Provider</label>
+                                <select id="exchangeRateProvider">
+                                    <option value="openexchangerates">Open Exchange Rates</option>
+                                    <option value="fixer">Fixer.io</option>
+                                    <option value="ecb">European Central Bank</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fab fa-cc-stripe"></i> Stripe Configuration</h4>
+                            <span class="integration-status active" id="stripeStatus">Connected</span>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="stripePublishableKey">Publishable Key</label>
+                                <div class="password-input">
+                                    <input type="password" id="stripePublishableKey" value="pk_live_************" placeholder="pk_live_...">
+                                    <button type="button" class="toggle-password" data-target="stripePublishableKey">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="stripeSecretKey">Secret Key</label>
+                                <div class="password-input">
+                                    <input type="password" id="stripeSecretKey" value="sk_live_************" placeholder="sk_live_...">
+                                    <button type="button" class="toggle-password" data-target="stripeSecretKey">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="stripeWebhookSecret">Webhook Secret</label>
+                                <div class="password-input">
+                                    <input type="password" id="stripeWebhookSecret" value="whsec_************" placeholder="whsec_...">
+                                    <button type="button" class="toggle-password" data-target="stripeWebhookSecret">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <small class="helper-text">For receiving Stripe events</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="stripeWebhookUrl">Webhook URL</label>
+                                <div class="input-group">
+                                    <input type="text" id="stripeWebhookUrl" value="https://evento.example.com/webhooks/stripe" readonly>
+                                    <button type="button" class="copy-btn" data-clipboard-target="#stripeWebhookUrl">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                                <small class="helper-text">Configure this in your Stripe dashboard</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="button" class="action-btn" id="testStripeConnectionBtn">
+                                    <i class="fas fa-plug"></i>
+                                    Test Connection
+                                </button>
+                                <button type="button" class="action-btn" id="stripeDashboardBtn">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Open Dashboard
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fab fa-paypal"></i> PayPal Configuration</h4>
+                            <span class="integration-status inactive" id="paypalStatus">Not Connected</span>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enablePayPal">
+                                    <label for="enablePayPal">Enable PayPal Payments</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="paypalClientId">Client ID</label>
+                                <div class="password-input">
+                                    <input type="password" id="paypalClientId" placeholder="Client ID from PayPal">
+                                    <button type="button" class="toggle-password" data-target="paypalClientId">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="paypalClientSecret">Client Secret</label>
+                                <div class="password-input">
+                                    <input type="password" id="paypalClientSecret" placeholder="Client Secret from PayPal">
+                                    <button type="button" class="toggle-password" data-target="paypalClientSecret">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="paypalMode">PayPal Mode</label>
+                                <select id="paypalMode">
+                                    <option value="sandbox">Sandbox</option>
+                                    <option value="live">Live</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="paypalWebhookId">Webhook ID</label>
+                                <input type="text" id="paypalWebhookId" placeholder="Webhook ID from PayPal">
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="button" class="action-btn" id="connectPayPalBtn">
+                                    <i class="fas fa-link"></i>
+                                    Connect PayPal
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-percentage"></i> Fees & Commissions</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="serviceFeePercentage">Service Fee Percentage</label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="serviceFeePercentage" min="0" max="50" step="0.1" value="10">
+                                    <span class="input-suffix">%</span>
+                                </div>
+                                <small class="helper-text">Platform fee applied to all transactions</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="minimumFee">Minimum Service Fee</label>
+                                <div class="input-with-prefix">
+                                    <span class="input-prefix">$</span>
+                                    <input type="number" id="minimumFee" min="0" step="0.01" value="1.00">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="maximumFee">Maximum Service Fee</label>
+                                <div class="input-with-prefix">
+                                    <span class="input-prefix">$</span>
+                                    <input type="number" id="maximumFee" min="0" step="0.01" value="50.00">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="organizerPayoutDelay">Organizer Payout Delay</label>
+                                <select id="organizerPayoutDelay">
+                                    <option value="0">Immediate</option>
+                                    <option value="1">1 day after event</option>
+                                    <option value="3">3 days after event</option>
+                                    <option value="7" selected>7 days after event</option>
+                                    <option value="14">14 days after event</option>
+                                    <option value="30">30 days after event</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableAutomaticPayouts" checked>
+                                    <label for="enableAutomaticPayouts">Enable automatic payouts</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="showFeesSeparately" checked>
+                                    <label for="showFeesSeparately">Show fees separately to customers</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email & Notifications Settings -->
+            <div class="settings-section" id="emailSection">
+                <div class="section-header">
+                    <h3><i class="fas fa-envelope"></i> Email & Notifications</h3>
+                    <p>Configure email services and notification preferences</p>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-server"></i> Email Service</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="emailService">Email Service Provider</label>
+                                <select id="emailService">
+                                    <option value="smtp">SMTP</option>
+                                    <option value="sendgrid" selected>SendGrid</option>
+                                    <option value="mailgun">Mailgun</option>
+                                    <option value="ses">Amazon SES</option>
+                                    <option value="postmark">Postmark</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="fromEmail">From Email Address</label>
+                                <input type="email" id="fromEmail" value="noreply@evento.example.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="fromName">From Name</label>
+                                <input type="text" id="fromName" value="Evento Platform">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="adminEmail">Admin Email</label>
+                                <input type="email" id="adminEmail" value="admin@evento.example.com">
+                                <small class="helper-text">For system notifications and alerts</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="supportEmail">Support Email</label>
+                                <input type="email" id="supportEmail" value="support@evento.example.com">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fab fa-sendgrid"></i> SendGrid Configuration</h4>
+                            <span class="integration-status active" id="sendgridStatus">Connected</span>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="sendgridApiKey">API Key</label>
+                                <div class="password-input">
+                                    <input type="password" id="sendgridApiKey" value="SG.************" placeholder="SG...">
+                                    <button type="button" class="toggle-password" data-target="sendgridApiKey">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="sendgridTemplateId">Default Template ID</label>
+                                <input type="text" id="sendgridTemplateId" placeholder="Template ID from SendGrid">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="sendgridWebhookUrl">Webhook URL</label>
+                                <div class="input-group">
+                                    <input type="text" id="sendgridWebhookUrl" value="https://evento.example.com/webhooks/sendgrid" readonly>
+                                    <button type="button" class="copy-btn" data-clipboard-target="#sendgridWebhookUrl">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="sendgridCategory">Default Category</label>
+                                <input type="text" id="sendgridCategory" value="evento-notifications">
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="button" class="action-btn" id="testSendGridBtn">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Send Test Email
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-bell"></i> Notification Settings</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label>Email Notifications</label>
+                                <div class="checkbox-list">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="notifyNewUser" checked>
+                                        <label for="notifyNewUser">New user registration</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="notifyNewEvent" checked>
+                                        <label for="notifyNewEvent">New event created</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="notifyNewTransaction" checked>
+                                        <label for="notifyNewTransaction">New transaction</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="notifyTicketPurchase" checked>
+                                        <label for="notifyTicketPurchase">Ticket purchase</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="notifyEventReminder">
+                                        <label for="notifyEventReminder">Event reminders</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="notifySystemAlerts" checked>
+                                        <label for="notifySystemAlerts">System alerts</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="notificationFrequency">Notification Frequency</label>
+                                <select id="notificationFrequency">
+                                    <option value="instant">Instant</option>
+                                    <option value="hourly">Hourly digest</option>
+                                    <option value="daily" selected>Daily digest</option>
+                                    <option value="weekly">Weekly digest</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="digestTime">Digest Time (if enabled)</label>
+                                <input type="time" id="digestTime" value="09:00">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-sms"></i> SMS & Push Notifications</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableSMS">
+                                    <label for="enableSMS">Enable SMS notifications</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="smsProvider">SMS Provider</label>
+                                <select id="smsProvider">
+                                    <option value="twilio">Twilio</option>
+                                    <option value="plivo">Plivo</option>
+                                    <option value="nexmo">Vonage (Nexmo)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enablePushNotifications">
+                                    <label for="enablePushNotifications">Enable push notifications</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="pushProvider">Push Notification Service</label>
+                                <select id="pushProvider">
+                                    <option value="firebase">Firebase Cloud Messaging</option>
+                                    <option value="onesignal">OneSignal</option>
+                                    <option value="pusher">Pusher</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="notificationSounds">Notification Sounds</label>
+                                <select id="notificationSounds">
+                                    <option value="enabled">Enabled</option>
+                                    <option value="disabled" selected>Disabled</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API & Integrations Settings -->
+            <div class="settings-section" id="apiSection">
+                <div class="section-header">
+                    <h3><i class="fas fa-code"></i> API & Integrations</h3>
+                    <p>Configure API access and third-party integrations</p>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-key"></i> API Configuration</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableAPI" checked>
+                                    <label for="enableAPI">Enable REST API</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="apiVersion">API Version</label>
+                                <select id="apiVersion">
+                                    <option value="v1" selected>v1 (Current)</option>
+                                    <option value="v2">v2 (Beta)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="apiRateLimit">API Rate Limit</label>
+                                <select id="apiRateLimit">
+                                    <option value="10">10 requests/minute</option>
+                                    <option value="30">30 requests/minute</option>
+                                    <option value="60" selected>60 requests/minute</option>
+                                    <option value="100">100 requests/minute</option>
+                                    <option value="unlimited">Unlimited</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="apiBaseUrl">API Base URL</label>
+                                <div class="input-group">
+                                    <input type="text" id="apiBaseUrl" value="https://api.evento.example.com/v1" readonly>
+                                    <button type="button" class="copy-btn" data-clipboard-target="#apiBaseUrl">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="apiDocumentationUrl">API Documentation</label>
+                                <div class="input-group">
+                                    <input type="text" id="apiDocumentationUrl" value="https://docs.evento.example.com" readonly>
+                                    <button type="button" class="copy-btn" data-clipboard-target="#apiDocumentationUrl">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="button" class="action-btn" id="generateApiKeyBtn">
+                                    <i class="fas fa-key"></i>
+                                    Generate New API Key
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-tools"></i> Webhooks</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableWebhooks" checked>
+                                    <label for="enableWebhooks">Enable webhooks</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="webhookSecret">Webhook Signing Secret</label>
+                                <div class="password-input">
+                                    <input type="password" id="webhookSecret" value="whsk_************">
+                                    <button type="button" class="toggle-password" data-target="webhookSecret">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <small class="helper-text">Used to sign webhook payloads</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="webhookTimeout">Webhook Timeout</label>
+                                <select id="webhookTimeout">
+                                    <option value="5">5 seconds</option>
+                                    <option value="10" selected>10 seconds</option>
+                                    <option value="30">30 seconds</option>
+                                    <option value="60">60 seconds</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="webhookRetries">Max Webhook Retries</label>
+                                <select id="webhookRetries">
+                                    <option value="0">No retry</option>
+                                    <option value="1">1 retry</option>
+                                    <option value="3" selected>3 retries</option>
+                                    <option value="5">5 retries</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="button" class="action-btn" id="manageWebhooksBtn">
+                                    <i class="fas fa-list"></i>
+                                    Manage Webhooks
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-puzzle-piece"></i> Third-Party Integrations</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="integrations-list">
+                                <div class="integration-item">
+                                    <div class="integration-icon">
+                                        <i class="fab fa-google"></i>
+                                    </div>
+                                    <div class="integration-info">
+                                        <h5>Google Analytics</h5>
+                                        <p>Track website traffic and user behavior</p>
+                                    </div>
+                                    <div class="integration-status">
+                                        <span class="status-badge success">Connected</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="integration-item">
+                                    <div class="integration-icon">
+                                        <i class="fab fa-facebook"></i>
+                                    </div>
+                                    <div class="integration-info">
+                                        <h5>Facebook Login</h5>
+                                        <p>Allow users to sign in with Facebook</p>
+                                    </div>
+                                    <div class="integration-status">
+                                        <span class="status-badge success">Connected</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="integration-item">
+                                    <div class="integration-icon">
+                                        <i class="fab fa-google"></i>
+                                    </div>
+                                    <div class="integration-info">
+                                        <h5>Google Login</h5>
+                                        <p>Allow users to sign in with Google</p>
+                                    </div>
+                                    <div class="integration-status">
+                                        <span class="status-badge success">Connected</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="integration-item">
+                                    <div class="integration-icon">
+                                        <i class="fab fa-slack"></i>
+                                    </div>
+                                    <div class="integration-info">
+                                        <h5>Slack Notifications</h5>
+                                        <p>Send notifications to Slack channels</p>
+                                    </div>
+                                    <div class="integration-status">
+                                        <span class="status-badge pending">Pending</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="integration-item">
+                                    <div class="integration-icon">
+                                        <i class="fab fa-aws"></i>
+                                    </div>
+                                    <div class="integration-info">
+                                        <h5>AWS S3 Storage</h5>
+                                        <p>Store files and images on AWS S3</p>
+                                    </div>
+                                    <div class="integration-status">
+                                        <span class="status-badge inactive">Not Connected</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="button" class="action-btn full-width" id="addIntegrationBtn">
+                                    <i class="fas fa-plus"></i>
+                                    Add New Integration
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-share-alt"></i> Social Media</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="facebookPage">Facebook Page URL</label>
+                                <input type="url" id="facebookPage" placeholder="https://facebook.com/yourevento">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="twitterHandle">Twitter Handle</label>
+                                <div class="input-with-prefix">
+                                    <span class="input-prefix">@</span>
+                                    <input type="text" id="twitterHandle" placeholder="eventoplatform">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="instagramProfile">Instagram Profile</label>
+                                <input type="url" id="instagramProfile" placeholder="https://instagram.com/yourevento">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="linkedinCompany">LinkedIn Company Page</label>
+                                <input type="url" id="linkedinCompany" placeholder="https://linkedin.com/company/evento">
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableSocialSharing" checked>
+                                    <label for="enableSocialSharing">Enable social sharing for events</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Settings -->
+            <div class="settings-section" id="performanceSection">
+                <div class="section-header">
+                    <h3><i class="fas fa-tachometer-alt"></i> Performance Settings</h3>
+                    <p>Optimize system performance and caching</p>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-bolt"></i> Caching</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableCaching" checked>
+                                    <label for="enableCaching">Enable caching</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="cacheDriver">Cache Driver</label>
+                                <select id="cacheDriver">
+                                    <option value="file">File</option>
+                                    <option value="redis" selected>Redis</option>
+                                    <option value="memcached">Memcached</option>
+                                    <option value="database">Database</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="cacheTTL">Default Cache TTL</label>
+                                <select id="cacheTTL">
+                                    <option value="60">1 minute</option>
+                                    <option value="300">5 minutes</option>
+                                    <option value="600" selected>10 minutes</option>
+                                    <option value="1800">30 minutes</option>
+                                    <option value="3600">1 hour</option>
+                                    <option value="86400">24 hours</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="redisHost">Redis Host</label>
+                                <input type="text" id="redisHost" value="127.0.0.1">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="redisPort">Redis Port</label>
+                                <input type="number" id="redisPort" value="6379" min="1" max="65535">
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="button" class="action-btn" id="flushCacheBtn">
+                                    <i class="fas fa-trash"></i>
+                                    Flush Cache
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-database"></i> Database</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="dbConnection">Database Connection</label>
+                                <select id="dbConnection">
+                                    <option value="mysql" selected>MySQL</option>
+                                    <option value="pgsql">PostgreSQL</option>
+                                    <option value="sqlite">SQLite</option>
+                                    <option value="sqlsrv">SQL Server</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dbHost">Database Host</label>
+                                <input type="text" id="dbHost" value="localhost">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dbName">Database Name</label>
+                                <input type="text" id="dbName" value="evento_db">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dbUsername">Database Username</label>
+                                <input type="text" id="dbUsername" value="evento_user">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dbPassword">Database Password</label>
+                                <div class="password-input">
+                                    <input type="password" id="dbPassword" value="********">
+                                    <button type="button" class="toggle-password" data-target="dbPassword">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="button" class="action-btn" id="testDbConnectionBtn">
+                                    <i class="fas fa-plug"></i>
+                                    Test Connection
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-compress-arrows-alt"></i> Optimization</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableGzip" checked>
+                                    <label for="enableGzip">Enable GZIP compression</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableMinification" checked>
+                                    <label for="enableMinification">Enable CSS/JS minification</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableCDN">
+                                    <label for="enableCDN">Enable CDN for static assets</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="cdnUrl">CDN URL</label>
+                                <input type="url" id="cdnUrl" placeholder="https://cdn.evento.example.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="imageOptimization">Image Optimization</label>
+                                <select id="imageOptimization">
+                                    <option value="none">None</option>
+                                    <option value="lossy" selected>Lossy compression</option>
+                                    <option value="lossless">Lossless compression</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="imageQuality">Image Quality (%)</label>
+                                <div class="range-input">
+                                    <input type="range" id="imageQuality" min="10" max="100" value="85">
+                                    <span class="range-value" id="imageQualityValue">85%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-chart-line"></i> Monitoring</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableMonitoring" checked>
+                                    <label for="enableMonitoring">Enable performance monitoring</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="monitoringService">Monitoring Service</label>
+                                <select id="monitoringService">
+                                    <option value="newrelic">New Relic</option>
+                                    <option value="datadog">Datadog</option>
+                                    <option value="sentry" selected>Sentry</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="sentryDSN">Sentry DSN</label>
+                                <div class="password-input">
+                                    <input type="password" id="sentryDSN" value="https://************@sentry.io/************">
+                                    <button type="button" class="toggle-password" data-target="sentryDSN">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="logLevel">Log Level</label>
+                                <select id="logLevel">
+                                    <option value="debug">Debug</option>
+                                    <option value="info" selected>Info</option>
+                                    <option value="warning">Warning</option>
+                                    <option value="error">Error</option>
+                                    <option value="critical">Critical</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="logRetention">Log Retention Period</label>
+                                <select id="logRetention">
+                                    <option value="7">7 days</option>
+                                    <option value="30" selected>30 days</option>
+                                    <option value="90">90 days</option>
+                                    <option value="365">365 days</option>
+                                    <option value="forever">Forever</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="button" class="action-btn" id="viewLogsBtn">
+                                    <i class="fas fa-file-alt"></i>
+                                    View System Logs
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backup & Maintenance Settings -->
+            <div class="settings-section" id="backupSection">
+                <div class="section-header">
+                    <h3><i class="fas fa-database"></i> Backup & Maintenance</h3>
+                    <p>Configure backups, updates, and system maintenance</p>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-save"></i> Backup Settings</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableAutoBackup" checked>
+                                    <label for="enableAutoBackup">Enable automatic backups</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="backupFrequency">Backup Frequency</label>
+                                <select id="backupFrequency">
+                                    <option value="daily" selected>Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="backupTime">Backup Time</label>
+                                <input type="time" id="backupTime" value="02:00">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="backupRetention">Backup Retention</label>
+                                <select id="backupRetention">
+                                    <option value="7">7 days</option>
+                                    <option value="30" selected>30 days</option>
+                                    <option value="90">90 days</option>
+                                    <option value="180">180 days</option>
+                                    <option value="365">365 days</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="backupStorage">Backup Storage</label>
+                                <select id="backupStorage">
+                                    <option value="local">Local Server</option>
+                                    <option value="s3" selected>AWS S3</option>
+                                    <option value="google">Google Cloud Storage</option>
+                                    <option value="azure">Azure Blob Storage</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="button" class="action-btn" id="backupNowBtn">
+                                    <i class="fas fa-play"></i>
+                                    Backup Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-cloud-upload-alt"></i> Storage Configuration</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="storageDriver">Storage Driver</label>
+                                <select id="storageDriver">
+                                    <option value="local">Local</option>
+                                    <option value="s3" selected>AWS S3</option>
+                                    <option value="gcs">Google Cloud Storage</option>
+                                    <option value="azure">Azure Blob Storage</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="s3Bucket">S3 Bucket Name</label>
+                                <input type="text" id="s3Bucket" value="evento-files">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="s3Region">S3 Region</label>
+                                <input type="text" id="s3Region" value="us-east-1">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="s3AccessKey">S3 Access Key</label>
+                                <div class="password-input">
+                                    <input type="password" id="s3AccessKey" value="AKIA************">
+                                    <button type="button" class="toggle-password" data-target="s3AccessKey">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="s3SecretKey">S3 Secret Key</label>
+                                <div class="password-input">
+                                    <input type="password" id="s3SecretKey" value="************">
+                                    <button type="button" class="toggle-password" data-target="s3SecretKey">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="button" class="action-btn" id="testS3ConnectionBtn">
+                                    <i class="fas fa-plug"></i>
+                                    Test S3 Connection
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-tools"></i> Maintenance Mode</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="maintenanceMode">
+                                    <label for="maintenanceMode">Enable maintenance mode</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="maintenanceMessage">Maintenance Message</label>
+                                <textarea id="maintenanceMessage" rows="4" placeholder="We're performing scheduled maintenance. We'll be back shortly!">The system is currently undergoing maintenance. Please check back later.</textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="maintenanceStart">Scheduled Start</label>
+                                <input type="datetime-local" id="maintenanceStart">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="maintenanceEnd">Scheduled End</label>
+                                <input type="datetime-local" id="maintenanceEnd">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="allowedIPsMaintenance">Allowed IPs (during maintenance)</label>
+                                <textarea id="allowedIPsMaintenance" rows="3" placeholder="IP addresses that can access during maintenance"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-robot"></i> System Updates</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="update-info">
+                                <div class="update-status">
+                                    <div class="status-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="status-info">
+                                        <h5>System is up to date</h5>
+                                        <p>Current version: <strong>v2.4.1</strong></p>
+                                        <p>Latest version: <strong>v2.4.1</strong></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="last-checked">
+                                    <i class="fas fa-clock"></i>
+                                    Last checked: 2 hours ago
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="autoUpdate" checked>
+                                    <label for="autoUpdate">Enable automatic updates</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="updateChannel">Update Channel</label>
+                                <select id="updateChannel">
+                                    <option value="stable" selected>Stable</option>
+                                    <option value="beta">Beta</option>
+                                    <option value="alpha">Alpha</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="button" class="action-btn" id="checkUpdatesBtn">
+                                    <i class="fas fa-sync"></i>
+                                    Check for Updates
+                                </button>
+                                <button type="button" class="action-btn" id="viewChangelogBtn">
+                                    <i class="fas fa-list"></i>
+                                    View Changelog
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Settings -->
+            <div class="settings-section" id="advancedSection">
+                <div class="section-header">
+                    <h3><i class="fas fa-wrench"></i> Advanced Settings</h3>
+                    <p>Advanced configuration for experienced administrators</p>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-terminal"></i> System Commands</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="systemCommand">Run System Command</label>
+                                <div class="command-input">
+                                    <input type="text" id="systemCommand" placeholder="Enter system command...">
+                                    <button type="button" class="execute-btn" id="executeCommandBtn">
+                                        <i class="fas fa-play"></i>
+                                    </button>
+                                </div>
+                                <small class="helper-text">Only safe commands are allowed</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Quick Actions</label>
+                                <div class="quick-commands">
+                                    <button type="button" class="command-btn" data-command="cache:clear">
+                                        <i class="fas fa-trash"></i>
+                                        Clear Cache
+                                    </button>
+                                    <button type="button" class="command-btn" data-command="queue:restart">
+                                        <i class="fas fa-redo"></i>
+                                        Restart Queue
+                                    </button>
+                                    <button type="button" class="command-btn" data-command="migrate:status">
+                                        <i class="fas fa-database"></i>
+                                        Check Migrations
+                                    </button>
+                                    <button type="button" class="command-btn" data-command="storage:link">
+                                        <i class="fas fa-link"></i>
+                                        Link Storage
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="commandOutput">Command Output</label>
+                                <div class="output-terminal" id="commandOutput">
+                                    <div class="output-header">
+                                        <span>Terminal Output</span>
+                                        <button type="button" class="clear-output-btn">
+                                            <i class="fas fa-trash"></i>
+                                            Clear
+                                        </button>
+                                    </div>
+                                    <div class="output-content">
+                                        <div class="output-line">System ready. Type 'help' for available commands.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-code"></i> Custom CSS/JS</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label for="customCSS">Custom CSS</label>
+                                <textarea id="customCSS" rows="6" placeholder="/* Add custom CSS here */"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customJS">Custom JavaScript</label>
+                                <textarea id="customJS" rows="6" placeholder="// Add custom JavaScript here"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableCustomCode" checked>
+                                    <label for="enableCustomCode">Enable custom code</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="button" class="action-btn" id="previewCustomCodeBtn">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                                <button type="button" class="action-btn" id="resetCustomCodeBtn">
+                                    <i class="fas fa-undo"></i>
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-flask"></i> Experimental Features</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableWebSockets">
+                                    <label for="enableWebSockets">Enable WebSockets (Real-time updates)</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableGraphQL">
+                                    <label for="enableGraphQL">Enable GraphQL API</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableAI">
+                                    <label for="enableAI">Enable AI features (Event recommendations)</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableBlockchain">
+                                    <label for="enableBlockchain">Enable blockchain ticketing (Experimental)</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableBetaFeatures">
+                                    <label for="enableBetaFeatures">Enable all beta features</label>
+                                </div>
+                            </div>
+                            
+                            <div class="warning-box">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <div>
+                                    <strong>Warning:</strong> Experimental features may be unstable and are not recommended for production use.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card danger-zone">
+                        <div class="settings-card-header">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Danger Zone</h4>
+                        </div>
+                        <div class="settings-card-body">
+                            <div class="warning-box critical">
+                                <i class="fas fa-radiation"></i>
+                                <div>
+                                    <strong>Critical Warning:</strong> These actions are irreversible and may cause data loss or system downtime.
+                                </div>
+                            </div>
+                            
+                            <div class="danger-actions">
+                                <div class="danger-action">
+                                    <div class="action-info">
+                                        <h5>Purge All Data</h5>
+                                        <p>Permanently delete all users, events, and transactions</p>
+                                    </div>
+                                    <button type="button" class="danger-btn" id="purgeDataBtn">
+                                        <i class="fas fa-trash"></i>
+                                        Purge
+                                    </button>
+                                </div>
+                                
+                                <div class="danger-action">
+                                    <div class="action-info">
+                                        <h5>Reset to Factory Defaults</h5>
+                                        <p>Reset all settings to their default values</p>
+                                    </div>
+                                    <button type="button" class="danger-btn" id="factoryResetBtn">
+                                        <i class="fas fa-redo"></i>
+                                        Reset
+                                    </button>
+                                </div>
+                                
+                                <div class="danger-action">
+                                    <div class="action-info">
+                                        <h5>Uninstall System</h5>
+                                        <p>Completely remove the Evento platform</p>
+                                    </div>
+                                    <button type="button" class="danger-btn" id="uninstallBtn">
+                                        <i class="fas fa-skull-crossbones"></i>
+                                        Uninstall
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirmDanger">Type "CONFIRM" to enable dangerous actions</label>
+                                <input type="text" id="confirmDanger" placeholder="Type CONFIRM here">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div class="modal-overlay" id="confirmationModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Confirm Action</h3>
+                    <button class="modal-close" id="closeConfirmationModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <p id="modalMessage">Are you sure you want to perform this action?</p>
+                    <div class="modal-actions">
+                        <button type="button" class="cancel-btn" id="cancelModalBtn">Cancel</button>
+                        <button type="button" class="confirm-btn" id="confirmModalBtn">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Email Modal -->
+        <div class="modal-overlay" id="testEmailModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Send Test Email</h3>
+                    <button class="modal-close" id="closeTestEmailModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="testEmailForm">
+                        <div class="form-group">
+                            <label for="testEmailRecipient">Recipient Email</label>
+                            <input type="email" id="testEmailRecipient" value="admin@evento.example.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="testEmailSubject">Subject</label>
+                            <input type="text" id="testEmailSubject" value="Evento Test Email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="testEmailMessage">Message</label>
+                            <textarea id="testEmailMessage" rows="4" required>This is a test email from the Evento platform to verify your email configuration.</textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="cancel-btn" id="cancelTestEmailBtn">Cancel</button>
+                            <button type="submit" class="send-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                Send Test Email
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Key Modal -->
+        <div class="modal-overlay" id="apiKeyModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>New API Key Generated</h3>
+                    <button class="modal-close" id="closeApiKeyModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="api-key-display">
+                        <div class="api-key-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>This API key will only be shown once. Please copy it to a safe place.</p>
+                        </div>
+                        <div class="api-key-value">
+                            <code id="generatedApiKey">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</code>
+                            <button type="button" class="copy-btn" id="copyApiKeyBtn">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                        </div>
+                        <div class="api-key-info">
+                            <p><strong>Key ID:</strong> <span id="apiKeyId">ak_784512369874</span></p>
+                            <p><strong>Expires:</strong> <span id="apiKeyExpiry">Never</span></p>
+                            <p><strong>Permissions:</strong> <span id="apiKeyPermissions">Full Access</span></p>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="close-btn" id="closeApiKeyBtn">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="../../js/admin/man-auth-helper.js"></script>
+    <script src="../../js/admin/man-dashboard.js"></script>
+    <script src="../../js/admin/man-settings.js"></script>
+</body>
+</html>
