@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../assets/icons/icon.png">
+    <title>Create Event | Evento Organizer</title>
+    <link rel="stylesheet" href="../../css/organizer/createevent.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-calendar-alt"></i>
+                <h2>Evento Organizer</h2>
+            </div>
+        </div>
+
+        <div class="user-profile">
+            <div class="avatar">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" alt="User">
+            </div>
+            <div class="user-info">
+                <h3 id="profileName"></h3>
+                <p>Event Organizer</p>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="createevent.html" class="active"><i class="fas fa-calendar-plus"></i> Create Event</a></li>
+            <li><a href="myevents.html"><i class="fas fa-calendar-week"></i> My Events</a></li>
+            <li><a href="categories.html"><i class="fas fa-wrench"></i> Services</a></li>
+            <li><a href="attendees.html"><i class="fas fa-users"></i> Attendees</a></li>
+            <li><a href="notifications.html"><i class="fas fa-wifi"></i> Live Manage</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="page-title">
+                <h1>Create New Event</h1>
+                <p id="currentDate">Fill in the details to create your event</p>
+            </div>
+            
+            <div class="top-actions">
+                <button class="action-btn" id="previewBtn">
+                    <i class="fas fa-eye"></i>
+                    <span>Preview</span>
+                </button>
+                <button class="action-btn save-draft-btn" id="saveDraftBtn">
+                    <i class="fas fa-save"></i>
+                    <span>Save Draft</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Create Event Form -->
+        <div class="create-event-container">
+            <form id="createEventForm" class="event-form">
+                <!-- Form Steps -->
+                <div class="form-steps">
+                    <div class="step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-info">
+                            <span class="step-label">Basic Info</span>
+                            <small>Event details</small>
+                        </div>
+                    </div>
+                    <div class="step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-info">
+                            <span class="step-label">Date & Location</span>
+                            <small>When & where</small>
+                        </div>
+                    </div>
+                    <div class="step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-info">
+                            <span class="step-label">Tickets & Pricing</span>
+                            <small>Revenue setup</small>
+                        </div>
+                    </div>
+                    <div class="step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-info">
+                            <span class="step-label">Finalize</span>
+                            <small>Review & publish</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 1: Basic Information -->
+                <div class="form-step active" id="step1">
+                    <div class="step-header">
+                        <h2><i class="fas fa-info-circle"></i> Basic Information</h2>
+                        <p>Tell us about your event</p>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="eventTitle">Event Title *</label>
+                            <input type="text" id="eventTitle" placeholder="e.g., Tech Conference 2024" required>
+                            <small class="hint">Make it descriptive and engaging</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventType">Event Type *</label>
+                            <select id="eventType" required>
+                                <option value="">Select event type</option>
+                                <option value="conference">Conference</option>
+                                <option value="workshop">Workshop</option>
+                                <option value="concert">Concert</option>
+                                <option value="meeting">Meeting</option>
+                                <option value="networking">Networking</option>
+                                <option value="webinar">Webinar</option>
+                                <option value="festival">Festival</option>
+                                <option value="exhibition">Exhibition</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventCategory">Category *</label>
+                            <select id="eventCategory" required>
+                                <option value="">Select category</option>
+                                <option value="technology">Technology</option>
+                                <option value="music">Music</option>
+                                <option value="business">Business</option>
+                                <option value="education">Education</option>
+                                <option value="health">Health & Wellness</option>
+                                <option value="food">Food & Drink</option>
+                                <option value="sports">Sports</option>
+                                <option value="arts">Arts & Culture</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="eventDescription">Description *</label>
+                            <textarea id="eventDescription" placeholder="Describe your event in detail..." rows="5" required></textarea>
+                            <small class="hint">Include key highlights, agenda, and what attendees will learn</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventImage">Event Image</label>
+                            <div class="image-upload">
+                                <div class="upload-placeholder" id="imageUploadPlaceholder">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Click to upload image</span>
+                                    <small>JPEG, PNG up to 5MB</small>
+                                </div>
+                                <input type="file" id="eventImage" accept="image/*" style="display: none;">
+                                <div class="image-preview" id="imagePreview" style="display: none;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventTags">Tags</label>
+                            <div class="tags-input">
+                                <input type="text" id="eventTags" placeholder="Add tags (press Enter)">
+                                <div class="tags-container" id="tagsContainer"></div>
+                            </div>
+                            <small class="hint">Add relevant tags to help people find your event</small>
+                        </div>
+                    </div>
+                    
+                    <div class="step-actions">
+                        <button type="button" class="next-btn" data-next="2">
+                            Next: Date & Location
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Date & Location -->
+                <div class="form-step" id="step2">
+                    <div class="step-header">
+                        <h2><i class="fas fa-calendar-alt"></i> Date & Location</h2>
+                        <p>When and where will your event take place?</p>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="startDate">Start Date *</label>
+                            <input type="date" id="startDate" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="startTime">Start Time *</label>
+                            <input type="time" id="startTime" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="endDate">End Date</label>
+                            <input type="date" id="endDate">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="endTime">End Time</label>
+                            <input type="time" id="endTime">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="timezone">Timezone *</label>
+                            <select id="timezone" required>
+                                <option value="UTC-5">EST (UTC-5)</option>
+                                <option value="UTC-8">PST (UTC-8)</option>
+                                <option value="UTC+0">GMT (UTC+0)</option>
+                                <option value="UTC+1">CET (UTC+1)</option>
+                                <option value="UTC+5:30">IST (UTC+5:30)</option>
+                                <option value="UTC+8">CST (UTC+8)</option>
+                                <option value="UTC+10">AEST (UTC+10)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventFormat">Event Format *</label>
+                            <select id="eventFormat" required>
+                                <option value="">Select format</option>
+                                <option value="in-person">In-Person</option>
+                                <option value="virtual">Virtual</option>
+                                <option value="hybrid">Hybrid</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group full-width" id="locationGroup">
+                            <label for="eventLocation">Location *</label>
+                            <input type="text" id="eventLocation" placeholder="Venue name or virtual meeting link">
+                            <small class="hint">For virtual events, provide the meeting link. For in-person, provide the venue address.</small>
+                        </div>
+                        
+                        <div class="form-group full-width" id="capacityGroup">
+                            <label for="eventCapacity">Maximum Capacity</label>
+                            <div class="capacity-input">
+                                <input type="range" id="capacityRange" min="1" max="10000" value="100">
+                                <div class="capacity-value">
+                                    <input type="number" id="eventCapacity" min="1" max="10000" value="100">
+                                    <span>attendees</span>
+                                </div>
+                            </div>
+                            <small class="hint">Set to 0 for unlimited attendees</small>
+                        </div>
+                    </div>
+                    
+                    <div class="step-actions">
+                        <button type="button" class="prev-btn" data-prev="1">
+                            <i class="fas fa-arrow-left"></i>
+                            Previous
+                        </button>
+                        <button type="button" class="next-btn" data-next="3">
+                            Next: Tickets & Pricing
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Tickets & Pricing -->
+                <div class="form-step" id="step3">
+                    <div class="step-header">
+                        <h2><i class="fas fa-ticket-alt"></i> Tickets & Pricing</h2>
+                        <p>Set up ticket types and pricing</p>
+                    </div>
+                    
+                    <div class="ticket-types">
+                        <div class="ticket-type-header">
+                            <h3>Ticket Types</h3>
+                            <button type="button" class="add-ticket-btn" id="addTicketBtn">
+                                <i class="fas fa-plus"></i>
+                                Add Ticket Type
+                            </button>
+                        </div>
+                        
+                        <div class="ticket-types-list" id="ticketTypesList">
+                            <!-- Ticket types will be added here -->
+                        </div>
+                        
+                        <div class="no-tickets" id="noTickets">
+                            <i class="fas fa-ticket-alt"></i>
+                            <p>No ticket types added yet</p>
+                            <small>Click "Add Ticket Type" to create your first ticket</small>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-settings">
+                        <h3>Payment Settings</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="currency">Currency *</label>
+                                <select id="currency" required>
+                                    <option value="USD">USD ($)</option>
+                                    <option value="EUR">EUR (€)</option>
+                                    <option value="GBP">GBP (£)</option>
+                                    <option value="INR">INR (₹)</option>
+                                    <option value="CAD">CAD (C$)</option>
+                                    <option value="AUD">AUD (A$)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="paymentMethods">Payment Methods</label>
+                                <div class="checkbox-group">
+                                    <label>
+                                        <input type="checkbox" name="paymentMethod" value="card" checked>
+                                        <i class="fas fa-credit-card"></i>
+                                        Credit/Debit Card
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="paymentMethod" value="paypal">
+                                        <i class="fab fa-paypal"></i>
+                                        PayPal
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="paymentMethod" value="bank">
+                                        <i class="fas fa-university"></i>
+                                        Bank Transfer
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="refundPolicy">Refund Policy</label>
+                                <select id="refundPolicy">
+                                    <option value="no-refunds">No refunds</option>
+                                    <option value="full-refund">Full refund up to 7 days before</option>
+                                    <option value="partial-refund">50% refund up to 3 days before</option>
+                                    <option value="custom">Custom policy</option>
+                                </select>
+                                <textarea id="customRefundPolicy" placeholder="Enter custom refund policy..." rows="3" style="display: none;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-actions">
+                        <button type="button" class="prev-btn" data-prev="2">
+                            <i class="fas fa-arrow-left"></i>
+                            Previous
+                        </button>
+                        <button type="button" class="next-btn" data-next="4">
+                            Next: Finalize
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Finalize -->
+                <div class="form-step" id="step4">
+                    <div class="step-header">
+                        <h2><i class="fas fa-check-circle"></i> Finalize & Publish</h2>
+                        <p>Review your event details and publish</p>
+                    </div>
+                    
+                    <div class="review-summary">
+                        <div class="review-section">
+                            <h3><i class="fas fa-info-circle"></i> Basic Information</h3>
+                            <div class="review-item">
+                                <span class="review-label">Event Title:</span>
+                                <span class="review-value" id="reviewTitle">-</span>
+                            </div>
+                            <div class="review-item">
+                                <span class="review-label">Type:</span>
+                                <span class="review-value" id="reviewType">-</span>
+                            </div>
+                            <div class="review-item">
+                                <span class="review-label">Category:</span>
+                                <span class="review-value" id="reviewCategory">-</span>
+                            </div>
+                            <div class="review-item">
+                                <span class="review-label">Description:</span>
+                                <span class="review-value" id="reviewDescription">-</span>
+                            </div>
+                        </div>
+                        
+                        <div class="review-section">
+                            <h3><i class="fas fa-calendar-alt"></i> Date & Location</h3>
+                            <div class="review-item">
+                                <span class="review-label">Date & Time:</span>
+                                <span class="review-value" id="reviewDateTime">-</span>
+                            </div>
+                            <div class="review-item">
+                                <span class="review-label">Format:</span>
+                                <span class="review-value" id="reviewFormat">-</span>
+                            </div>
+                            <div class="review-item">
+                                <span class="review-label">Location:</span>
+                                <span class="review-value" id="reviewLocation">-</span>
+                            </div>
+                            <div class="review-item">
+                                <span class="review-label">Capacity:</span>
+                                <span class="review-value" id="reviewCapacity">-</span>
+                            </div>
+                        </div>
+                        
+                        <div class="review-section">
+                            <h3><i class="fas fa-ticket-alt"></i> Tickets & Pricing</h3>
+                            <div class="review-item">
+                                <span class="review-label">Ticket Types:</span>
+                                <span class="review-value" id="reviewTickets">-</span>
+                            </div>
+                            <div class="review-item">
+                                <span class="review-label">Total Revenue Potential:</span>
+                                <span class="review-value" id="reviewRevenue">-</span>
+                            </div>
+                            <div class="review-item">
+                                <span class="review-label">Currency:</span>
+                                <span class="review-value" id="reviewCurrency">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="publish-options">
+                        <h3>Publishing Options</h3>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="publishOption" value="publish" checked>
+                                <span class="radio-label">
+                                    <strong>Publish Now</strong>
+                                    <small>Event will be visible to attendees immediately</small>
+                                </span>
+                            </label>
+                            <label>
+                                <input type="radio" name="publishOption" value="schedule">
+                                <span class="radio-label">
+                                    <strong>Schedule for Later</strong>
+                                    <small>Set a date and time to publish automatically</small>
+                                </span>
+                            </label>
+                            <label>
+                                <input type="radio" name="publishOption" value="draft">
+                                <span class="radio-label">
+                                    <strong>Save as Draft</strong>
+                                    <small>Keep as draft for further editing</small>
+                                </span>
+                            </label>
+                        </div>
+                        
+                        <div class="schedule-date" id="scheduleDate" style="display: none;">
+                            <div class="form-group">
+                                <label for="publishDate">Publish Date</label>
+                                <input type="datetime-local" id="publishDate">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-actions">
+                        <button type="button" class="prev-btn" data-prev="3">
+                            <i class="fas fa-arrow-left"></i>
+                            Previous
+                        </button>
+                        <button type="submit" class="publish-btn" id="publishBtn">
+                            <i class="fas fa-rocket"></i>
+                            Publish Event
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Quick Templates -->
+        <div class="templates-section">
+            <h3>Quick Templates</h3>
+            <div class="templates-grid">
+                <button class="template-card" data-template="conference">
+                    <div class="template-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="template-info">
+                        <h4>Conference</h4>
+                        <p>Multi-day professional event</p>
+                    </div>
+                </button>
+                
+                <button class="template-card" data-template="workshop">
+                    <div class="template-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="template-info">
+                        <h4>Workshop</h4>
+                        <p>Interactive training session</p>
+                    </div>
+                </button>
+                
+                <button class="template-card" data-template="meeting">
+                    <div class="template-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="template-info">
+                        <h4>Team Meeting</h4>
+                        <p>Internal company meeting</p>
+                    </div>
+                </button>
+                
+                <button class="template-card" data-template="webinar">
+                    <div class="template-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <div class="template-info">
+                        <h4>Webinar</h4>
+                        <p>Online educational session</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Preview Modal -->
+    <div class="modal-overlay" id="previewModal">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3>Event Preview</h3>
+                <button class="modal-close" id="closePreview">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="preview-container" id="previewContainer">
+                    <!-- Preview content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ticket Type Modal -->
+    <div class="modal-overlay" id="ticketModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="ticketModalTitle">Add Ticket Type</h3>
+                <button class="modal-close" id="closeTicketModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="ticketForm">
+                    <div class="form-group">
+                        <label for="ticketName">Ticket Name *</label>
+                        <input type="text" id="ticketName" placeholder="e.g., Early Bird, VIP, General Admission" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ticketPrice">Price *</label>
+                        <div class="price-input">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="ticketPrice" min="0" step="0.01" placeholder="0.00" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ticketQuantity">Quantity</label>
+                        <input type="number" id="ticketQuantity" min="1" placeholder="Leave empty for unlimited">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ticketDescription">Description</label>
+                        <textarea id="ticketDescription" placeholder="What's included in this ticket?" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="saleStart">Sale Start Date</label>
+                        <input type="datetime-local" id="saleStart">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="saleEnd">Sale End Date</label>
+                        <input type="datetime-local" id="saleEnd">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="ticketFeatured">
+                            <span>Feature this ticket</span>
+                        </label>
+                        <small class="hint">Featured tickets appear first</small>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn" id="cancelTicketBtn">Cancel</button>
+                        <button type="submit" class="save-btn" id="saveTicketBtn">
+                            <i class="fas fa-save"></i>
+                            Save Ticket
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/organizer/auth-helper.js"></script>
+    <script src="../../js/organizer/createevent.js"></script>
+</body>
+</html>

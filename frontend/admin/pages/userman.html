@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/icons/icon.png">
+    <title>User Management | Evento Admin</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/userman.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-calendar-alt"></i>
+                <h2>Evento <br>Admin</h2>
+            </div>
+        </div>
+
+        <div class="user-profile">
+            <div class="avatar">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Admin" alt="Admin">
+            </div>
+            <div class="user-info">
+                <h3>Admin User</h3>
+                <p>System Administrator</p>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="dashboard.html" ><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="userman.html" class="active"><i class="fas fa-users"></i> User Management</a></li>
+            <li><a href="org.html"><i class="fas fa-user-tie"></i> Organizers</a></li>
+            <li><a href="alleve.html"><i class="fas fa-calendar-check"></i> All Events</a></li>
+            <li><a href="categories.html"><i class="fas fa-tags"></i> Categories</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-line"></i> System Analytics</a></li>
+            <li><a href="reports.html"><i class="fas fa-file-alt"></i> Reports</a></li>
+            <li><a href="transactions.html"><i class="fas fa-credit-card"></i> Transactions</a></li>
+            <li><a href="settings.html"><i class="fas fa-sliders-h"></i> System Settings</a></li>
+            <li><a href="auditlogs.html"><i class="fas fa-clipboard-list"></i> Audit Logs</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="../organizer/org-dashboard.html" class="quick-switch">
+                <i class="fas fa-exchange-alt"></i>
+                Switch to Organizer View
+            </a>
+            <div class="system-status">
+                <div class="status-indicator online"></div>
+                <span>System Online</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="page-title">
+                <h1>User Management</h1>
+                <p id="currentDate">Manage all system users and their permissions</p>
+            </div>
+            
+            <div class="top-actions">
+                <div class="quick-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search users..." id="userSearch">
+                </div>
+                <button class="action-btn" id="filterBtn">
+                    <i class="fas fa-filter"></i>
+                    <span>Filter</span>
+                </button>
+                <button class="action-btn primary-btn" id="addUserBtn">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Add User</span>
+                </button>
+                <button class="action-btn" id="exportUsersBtn">
+                    <i class="fas fa-download"></i>
+                    <span>Export</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- User Stats Overview -->
+        <div class="user-stats-overview">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="totalUsers">2,847</h3>
+                    <p>Total Users</p>
+                    <span class="trend up"><i class="fas fa-arrow-up"></i> 12% this month</span>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon active">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="activeUsers">2,412</h3>
+                    <p>Active Users</p>
+                    <span class="trend up"><i class="fas fa-arrow-up"></i> 8% this week</span>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon organizer">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="organizerUsers">89</h3>
+                    <p>Organizers</p>
+                    <span class="trend up"><i class="fas fa-arrow-up"></i> 15% this month</span>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon admin">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="adminUsers">12</h3>
+                    <p>Administrators</p>
+                    <span class="trend stable"><i class="fas fa-minus"></i> No change</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters Bar -->
+        <div class="filters-bar">
+            <div class="filter-group">
+                <label for="roleFilter">Role:</label>
+                <select id="roleFilter" class="filter-select">
+                    <option value="all">All Roles</option>
+                    <option value="attendee">Attendee</option>
+                    <option value="organizer">Organizer</option>
+                    <option value="admin">Administrator</option>
+                    <option value="moderator">Moderator</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="statusFilter">Status:</label>
+                <select id="statusFilter" class="filter-select">
+                    <option value="all">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="suspended">Suspended</option>
+                    <option value="pending">Pending Verification</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="dateFilter">Registration Date:</label>
+                <select id="dateFilter" class="filter-select">
+                    <option value="all">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                    <option value="year">This Year</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="sortFilter">Sort By:</label>
+                <select id="sortFilter" class="filter-select">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="name_asc">Name (A-Z)</option>
+                    <option value="name_desc">Name (Z-A)</option>
+                    <option value="activity">Last Active</option>
+                </select>
+            </div>
+            
+            <button class="clear-filters" id="clearFilters">
+                <i class="fas fa-times"></i>
+                Clear All
+            </button>
+        </div>
+
+        <!-- Users Table -->
+        <div class="users-container">
+            <div class="table-header">
+                <div class="table-actions">
+                    <div class="bulk-select">
+                        <input type="checkbox" id="selectAll">
+                        <label for="selectAll">Select All</label>
+                    </div>
+                    <select id="bulkAction" class="bulk-action-select">
+                        <option value="">Bulk Actions</option>
+                        <option value="activate">Activate Selected</option>
+                        <option value="deactivate">Deactivate Selected</option>
+                        <option value="assign-role">Assign Role</option>
+                        <option value="send-email">Send Email</option>
+                        <option value="export">Export Selected</option>
+                        <option value="delete">Delete Selected</option>
+                    </select>
+                    <button class="apply-bulk" id="applyBulk">Apply</button>
+                </div>
+                <div class="table-info">
+                    Showing <span id="showingFrom">1</span>-<span id="showingTo">25</span> of <span id="totalUsersCount">2,847</span> users
+                </div>
+            </div>
+            
+            <div class="users-table">
+                <div class="table-row header">
+                    <div class="table-cell select-cell">
+                        <input type="checkbox">
+                    </div>
+                    <div class="table-cell user-cell">User</div>
+                    <div class="table-cell email-cell">Email</div>
+                    <div class="table-cell role-cell">Role</div>
+                    <div class="table-cell status-cell">Status</div>
+                    <div class="table-cell date-cell">Registered</div>
+                    <div class="table-cell activity-cell">Last Active</div>
+                    <div class="table-cell events-cell">Events</div>
+                    <div class="table-cell actions-cell">Actions</div>
+                </div>
+                
+                <!-- Users will be loaded here dynamically -->
+                <div class="table-body" id="usersTableBody">
+                    <!-- Users loaded via JavaScript -->
+                </div>
+            </div>
+            
+            <div class="table-footer">
+                <div class="pagination">
+                    <button class="pagination-btn" id="prevPage" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="page-numbers">
+                        <button class="page-number active">1</button>
+                        <button class="page-number">2</button>
+                        <button class="page-number">3</button>
+                        <span>...</span>
+                        <button class="page-number">12</button>
+                    </div>
+                    
+                    <button class="pagination-btn" id="nextPage">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="items-per-page">
+                    <label for="itemsPerPage">Show:</label>
+                    <select id="itemsPerPage">
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="250">250</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats Sidebar -->
+        <div class="quick-stats-sidebar">
+            <div class="stats-card">
+                <div class="stats-header">
+                    <h3><i class="fas fa-chart-pie"></i> User Distribution</h3>
+                </div>
+                <div class="stats-body">
+                    <div class="distribution-chart">
+                        <div class="chart-placeholder">
+                            <!-- Pie chart would go here -->
+                            <div class="pie-chart">
+                                <div class="chart-slice" style="--percentage: 65%; --color: #4f46e5;" data-label="Attendees"></div>
+                                <div class="chart-slice" style="--percentage: 25%; --color: #10b981;" data-label="Organizers"></div>
+                                <div class="chart-slice" style="--percentage: 8%; --color: #8b5cf6;" data-label="Moderators"></div>
+                                <div class="chart-slice" style="--percentage: 2%; --color: #ef4444;" data-label="Admins"></div>
+                            </div>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="legend-color attendee"></span>
+                                <span>Attendees</span>
+                                <span class="legend-count">1,851</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color organizer"></span>
+                                <span>Organizers</span>
+                                <span class="legend-count">712</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color moderator"></span>
+                                <span>Moderators</span>
+                                <span class="legend-count">228</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color admin"></span>
+                                <span>Admins</span>
+                                <span class="legend-count">56</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-card">
+                <div class="stats-header">
+                    <h3><i class="fas fa-user-clock"></i> Recent Sign-ups</h3>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div class="stats-body">
+                    <div class="recent-users">
+                        <div class="recent-user">
+                            <div class="user-avatar">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" alt="Sarah">
+                            </div>
+                            <div class="user-info">
+                                <h4>Sarah Johnson</h4>
+                                <p>Organizer</p>
+                                <span class="user-time">2 hours ago</span>
+                            </div>
+                        </div>
+                        
+                        <div class="recent-user">
+                            <div class="user-avatar">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Mike" alt="Mike">
+                            </div>
+                            <div class="user-info">
+                                <h4>Mike Chen</h4>
+                                <p>Attendee</p>
+                                <span class="user-time">5 hours ago</span>
+                            </div>
+                        </div>
+                        
+                        <div class="recent-user">
+                            <div class="user-avatar">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Emma" alt="Emma">
+                            </div>
+                            <div class="user-info">
+                                <h4>Emma Wilson</h4>
+                                <p>Organizer</p>
+                                <span class="user-time">1 day ago</span>
+                            </div>
+                        </div>
+                        
+                        <div class="recent-user">
+                            <div class="user-avatar">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=David" alt="David">
+                            </div>
+                            <div class="user-info">
+                                <h4>David Kim</h4>
+                                <p>Attendee</p>
+                                <span class="user-time">2 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-card">
+                <div class="stats-header">
+                    <h3><i class="fas fa-user-lock"></i> Security Alerts</h3>
+                </div>
+                <div class="stats-body">
+                    <div class="security-alerts">
+                        <div class="alert-item warning">
+                            <div class="alert-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h4>3 Failed Logins</h4>
+                                <p>Multiple failed attempts detected</p>
+                            </div>
+                        </div>
+                        
+                        <div class="alert-item info">
+                            <div class="alert-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h4>Password Reset</h4>
+                                <p>12 password resets in last 24h</p>
+                            </div>
+                        </div>
+                        
+                        <div class="alert-item success">
+                            <div class="alert-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h4>2FA Enabled</h4>
+                                <p>45 users enabled 2FA this week</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add User Modal -->
+    <div class="modal-overlay" id="addUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New User</h3>
+                <button class="modal-close" id="closeAddUserModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm">
+                    <div class="form-group">
+                        <label for="userFirstName">First Name</label>
+                        <input type="text" id="userFirstName" placeholder="Enter first name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userLastName">Last Name</label>
+                        <input type="text" id="userLastName" placeholder="Enter last name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userEmail">Email Address</label>
+                        <input type="email" id="userEmail" placeholder="Enter email address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userRole">Role</label>
+                        <select id="userRole" required>
+                            <option value="">Select Role</option>
+                            <option value="attendee">Attendee</option>
+                            <option value="organizer">Organizer</option>
+                            <option value="moderator">Moderator</option>
+                            <option value="admin">Administrator</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userPassword">Password</label>
+                        <input type="password" id="userPassword" placeholder="Enter password" required>
+                        <small class="form-hint">Minimum 8 characters with letters and numbers</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Permissions</label>
+                        <div class="permissions-grid">
+                            <label class="permission-checkbox">
+                                <input type="checkbox" name="permissions" value="create_events">
+                                <span class="checkmark"></span>
+                                Create Events
+                            </label>
+                            <label class="permission-checkbox">
+                                <input type="checkbox" name="permissions" value="manage_events">
+                                <span class="checkmark"></span>
+                                Manage Events
+                            </label>
+                            <label class="permission-checkbox">
+                                <input type="checkbox" name="permissions" value="view_reports">
+                                <span class="checkmark"></span>
+                                View Reports
+                            </label>
+                            <label class="permission-checkbox">
+                                <input type="checkbox" name="permissions" value="manage_users">
+                                <span class="checkmark"></span>
+                                Manage Users
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn" id="cancelAddUser">Cancel</button>
+                        <button type="submit" class="save-btn">
+                            <i class="fas fa-user-plus"></i>
+                            Create User
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div class="modal-overlay" id="editUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit User</h3>
+                <button class="modal-close" id="closeEditUserModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editUserForm">
+                    <div class="user-profile-header">
+                        <div class="user-avatar-large">
+                            <img src="" alt="" id="editUserAvatar">
+                            <button type="button" class="change-avatar-btn">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                        <div class="user-info-header">
+                            <h4 id="editUserName">Loading...</h4>
+                            <p id="editUserEmail">Loading...</p>
+                            <span class="user-status-badge" id="editUserStatus"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editFirstName">First Name</label>
+                            <input type="text" id="editFirstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editLastName">Last Name</label>
+                            <input type="text" id="editLastName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editEmail">Email Address</label>
+                        <input type="email" id="editEmail" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editRole">Role</label>
+                        <select id="editRole" required>
+                            <option value="attendee">Attendee</option>
+                            <option value="organizer">Organizer</option>
+                            <option value="moderator">Moderator</option>
+                            <option value="admin">Administrator</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editStatus">Account Status</label>
+                        <select id="editStatus">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="suspended">Suspended</option>
+                            <option value="pending">Pending</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Permissions</label>
+                        <div class="permissions-grid">
+                            <label class="permission-checkbox">
+                                <input type="checkbox" name="editPermissions" value="create_events">
+                                <span class="checkmark"></span>
+                                Create Events
+                            </label>
+                            <label class="permission-checkbox">
+                                <input type="checkbox" name="editPermissions" value="manage_events">
+                                <span class="checkmark"></span>
+                                Manage Events
+                            </label>
+                            <label class="permission-checkbox">
+                                <input type="checkbox" name="editPermissions" value="view_reports">
+                                <span class="checkmark"></span>
+                                View Reports
+                            </label>
+                            <label class="permission-checkbox">
+                                <input type="checkbox" name="editPermissions" value="manage_users">
+                                <span class="checkmark"></span>
+                                Manage Users
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn" id="cancelEditUser">Cancel</button>
+                        <button type="submit" class="save-btn">
+                            <i class="fas fa-save"></i>
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Detail Modal -->
+    <div class="modal-overlay" id="userDetailModal">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3>User Details</h3>
+                <button class="modal-close" id="closeUserDetailModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="user-detail-container" id="userDetailContainer">
+                    <!-- User details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteConfirmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Deletion</h3>
+                <button class="modal-close" id="closeDeleteModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="warning-message">
+                    <div class="warning-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h4>Delete User Account</h4>
+                    <p>Are you sure you want to delete this user account? This action cannot be undone and will:</p>
+                    <ul>
+                        <li>Permanently delete the user account</li>
+                        <li>Remove all user data and history</li>
+                        <li>Cancel any upcoming event registrations</li>
+                        <li>Delete user-created content (if any)</li>
+                    </ul>
+                    <p class="delete-user-info" id="deleteUserInfo"></p>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" id="cancelDelete">Cancel</button>
+                    <button type="button" class="danger-btn" id="confirmDelete">
+                        <i class="fas fa-trash"></i>
+                        Delete User
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/auth-helper.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/userman.js"></script>
+</body>
+</html>

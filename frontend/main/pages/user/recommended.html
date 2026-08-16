@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../assets/icons/icon-usr.png">
+    <title>Recommended | Evento</title>
+    <link rel="stylesheet" href="../../css/user/dashboard.css">
+    <link rel="stylesheet" href="../../css/user/recommended.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <img src="../../assets/icons/icon-usr.png" alt="Evento Logo" class="nav-logo" style="width: 32px; height: 32px; object-fit: contain;">
+                <h2>Evento</h2>
+            </div>
+        </div>
+
+        <div class="user-profile">
+            <div class="avatar">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" alt="User">
+            </div>
+            <div class="user-info">
+                <h3>Alex Johnson</h3>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="upcoming.html"><i class="fas fa-calendar-check"></i> My Events</a></li>
+            <li><a href="recommended.html" class="active"><i class="fas fa-star"></i> Explore Events</a></li>
+            <li><a href="tickets.html"><i class="fas fa-ticket-alt"></i> Explore Services</a></li>
+            <li><a href="friends.html"><i class="fas fa-user-friends"></i> Friends</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="page-title">
+                <h1>Find Events...</h1>
+                <p id="currentDate">Monday, December 11, 2024</p>
+            </div>
+            
+            <div class="top-actions">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search events..." id="searchInput">
+                </div>
+                
+                <div class="custom-dropdown" id="locationDropdown">
+                    <div class="dropdown-selected">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>All India</span>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <div class="dropdown-options">
+                        <div class="dropdown-option active" data-value="all">All India</div>
+                        <div class="dropdown-option" data-value="mumbai">Mumbai</div>
+                        <div class="dropdown-option" data-value="delhi">Delhi</div>
+                        <div class="dropdown-option" data-value="bangalore">Bangalore</div>
+                        <div class="dropdown-option" data-value="chennai">Chennai</div>
+                        <div class="dropdown-option" data-value="hyderabad">Hyderabad</div>
+                    </div>
+                </div>
+                <button class="action-btn notification-btn" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </button>
+                <button class="action-btn user-btn" id="logoutBtn" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Recommended Controls -->
+        <div class="recommended-controls">
+            <div class="controls-left">
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label for="matchFilter"><i class="fas fa-percentage"></i> Match:</label>
+                        <select id="matchFilter" class="filter-select">
+                            <option value="all">All Matches</option>
+                            <option value="high">High Match (90%+)</option>
+                            <option value="medium">Medium Match (70-89%)</option>
+                            <option value="friends">Friends Attending</option>
+                            <option value="trending">Trending</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="dateFilter"><i class="fas fa-calendar-alt"></i> Date:</label>
+                        <select id="dateFilter" class="filter-select">
+                            <option value="all">Any Time</option>
+                            <option value="today">Today</option>
+                            <option value="tomorrow">Tomorrow</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                    
+                    <button class="filter-reset" id="resetFilters">
+                        <i class="fas fa-undo"></i> Reset Filters
+                    </button>
+                </div>
+            </div>
+            
+            <div class="controls-right">
+                <div class="action-buttons">
+                    <button class="action-btn-secondary" id="insightInfo">
+                        <i class="fas fa-info-circle"></i> Info
+                    </button>
+                    <button class="action-btn-secondary" id="managePreferences">
+                        <i class="fas fa-sliders-h"></i> Preferences
+                    </button>
+                    <button class="action-btn-primary" id="refreshRecommendations">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Recommendations Content -->
+        <div class="recommended-content">
+            <!-- Left Column - Recommendations -->
+            <div class="recommended-column">
+                <!-- Personalized Recommendations -->
+                <div class="recommended-section">
+                    <div class="section-header">
+                        <h3> Current events</h3>
+                    </div>
+                    
+                    <div class="recommendations-grid" id="eventsContainer">
+                        <div class="recommendation-card high-match">
+    
+    <div class="recommendation-header">
+        <div class="match-label">Trending Event</div>
+    </div>
+
+    <div class="recommendation-content">
+        <div class="event-image">
+            <img src="https://source.unsplash.com/600x400/?technology,conference" alt="Event">
+            <div class="event-category tech">
+                <i class="fas fa-laptop-code"></i> Tech
+            </div>
+        </div>
+
+        <div class="event-details">
+            <h4>Tech Innovators Meetup 2026</h4>
+            <p class="event-description">
+                Join industry leaders to explore AI, Cloud, and Future Tech innovations.
+            </p>
+
+            <div class="event-info">
+                <div class="info-item">
+                    <i class="fas fa-calendar"></i> April 10, 2026
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i> Bangalore
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-ticket-alt"></i> Free
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="recommendation-footer">
+        <button class="btn-view-details">
+            <i class="fas fa-eye"></i> View
+        </button>
+        <button class="btn-book-now">
+            <i class="fas fa-ticket-alt"></i> Register
+        </button>
+    </div>
+
+</div>
+
+
+<div class="recommendation-card medium-match">
+
+    <div class="recommendation-header">
+        <div class="match-label">Popular Event</div>
+    </div>
+
+    <div class="recommendation-content">
+        <div class="event-image">
+            <img src="https://source.unsplash.com/600x400/?music,concert" alt="Event">
+            <div class="event-category music">
+                <i class="fas fa-music"></i> Music
+            </div>
+        </div>
+
+        <div class="event-details">
+            <h4>Live Music Festival</h4>
+            <p class="event-description">
+                Experience an electrifying night with top artists and live performances.
+            </p>
+
+            <div class="event-info">
+                <div class="info-item">
+                    <i class="fas fa-calendar"></i> April 15, 2026
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i> Chennai
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-ticket-alt"></i> ₹499
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="recommendation-footer">
+        <button class="btn-view-details">
+            <i class="fas fa-eye"></i> View
+        </button>
+        <button class="btn-book-now">
+            <i class="fas fa-ticket-alt"></i> Register
+        </button>
+    </div>
+
+</div>
+
+
+<div class="recommendation-card high-match">
+
+    <div class="recommendation-header">
+        <div class="match-label">Recommended</div>
+    </div>
+
+    <div class="recommendation-content">
+        <div class="event-image">
+            <img src="https://source.unsplash.com/600x400/?food,festival" alt="Event">
+            <div class="event-category food">
+                <i class="fas fa-utensils"></i> Food
+            </div>
+        </div>
+
+        <div class="event-details">
+            <h4>Food & Culture Fest</h4>
+            <p class="event-description">
+                Explore delicious cuisines and cultural experiences from around the world.
+            </p>
+
+            <div class="event-info">
+                <div class="info-item">
+                    <i class="fas fa-calendar"></i> April 20, 2026
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i> Hyderabad
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-ticket-alt"></i> ₹299
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="recommendation-footer">
+        <button class="btn-view-details">
+            <i class="fas fa-eye"></i> View
+        </button>
+        <button class="btn-book-now">
+            <i class="fas fa-ticket-alt"></i> Register
+        </button>
+    </div>
+
+</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="recommended-column">
+                <!-- Friends' Recommendations -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-user-friends"></i> Friends Also Like</h3>
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="friends-recommendations">
+                            <div class="friend-recommendation">
+                                <div class="friend-avatar">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Mike" alt="Mike">
+                                </div>
+                                <div class="friend-info">
+                                    <h5>Mike Ross</h5>
+                                    <p class="friend-event">Booked: Tech Conference</p>
+                                    <div class="friend-match">
+                                        <i class="fas fa-star"></i>
+                                        <span>85% match with you</span>
+                                    </div>
+                                </div>
+                                <button class="btn-follow-event">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="friend-recommendation">
+                                <div class="friend-avatar">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" alt="Sarah">
+                                </div>
+                                <div class="friend-info">
+                                    <h5>Sarah Chen</h5>
+                                    <p class="friend-event">Interested: Music Festival</p>
+                                    <div class="friend-match">
+                                        <i class="fas fa-star"></i>
+                                        <span>92% match with you</span>
+                                    </div>
+                                </div>
+                                <button class="btn-follow-event">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="friend-recommendation">
+                                <div class="friend-avatar">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=David" alt="David">
+                                </div>
+                                <div class="friend-info">
+                                    <h5>David Kim</h5>
+                                    <p class="friend-event">Attended: Food Festival</p>
+                                    <div class="friend-match">
+                                        <i class="fas fa-star"></i>
+                                        <span>78% match with you</span>
+                                    </div>
+                                </div>
+                                <button class="btn-follow-event">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recommendation Tips -->
+                <div class="card tips-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-tips"></i> Improve Recommendations</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="tip-item">
+                            <div class="tip-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="tip-content">
+                                <h5>Rate More Events</h5>
+                                <p>Rate past events to improve your profile accuracy.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tip-item">
+                            <div class="tip-icon">
+                                <i class="fas fa-bookmark"></i>
+                            </div>
+                            <div class="tip-content">
+                                <h5>Bookmark Interests</h5>
+                                <p>Save events you're interested in for better matches.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tip-item">
+                            <div class="tip-icon">
+                                <i class="fas fa-user-friends"></i>
+                            </div>
+                            <div class="tip-content">
+                                <h5>Connect Friends</h5>
+                                <p>More friends mean better social recommendations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions-card">
+                    <h4><i class="fas fa-bolt"></i> Quick Actions</h4>
+                    <div class="quick-action-buttons">
+                        <button class="quick-action-btn" id="discoverSimilar">
+                            <i class="fas fa-compass"></i>
+                            <span>Discover Similar</span>
+                        </button>
+                        <button class="quick-action-btn" id="saveSearch">
+                            <i class="fas fa-search"></i>
+                            <span>Save Search</span>
+                        </button>
+                        <button class="quick-action-btn" id="getAlerts">
+                            <i class="fas fa-bell"></i>
+                            <span>Get Alerts</span>
+                        </button>
+                        <button class="quick-action-btn" id="shareProfile">
+                            <i class="fas fa-share-alt"></i>
+                            <span>Share Profile</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-state-content">
+                <i class="fas fa-star"></i>
+                <h3>No Recommendations Yet</h3>
+                <p>We need to learn more about your interests to provide personalized recommendations. Start by attending events or updating your profile!</p>
+                <button class="btn-primary" id="updateProfileBtn">
+                    <i class="fas fa-user-edit"></i> Update Profile
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Recommendation Stats</h4>
+                    <div class="footer-stats">
+                        <div class="footer-stat">
+                            <span class="value" id="footerMatches">24</span>
+                            <span class="label">Matches</span>
+                        </div>
+                        <div class="footer-stat">
+                            <span class="value" id="footerMatchScore">92%</span>
+                            <span class="label">Match Score</span>
+                        </div>
+                        <div class="footer-stat">
+                            <span class="value" id="footerFriends">18</span>
+                            <span class="label">Friends</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Evento</h4>
+                    <p>Your gateway to amazing experiences</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Evento. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Notification Panel -->
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <button class="close-notifications" id="closeNotifications">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notification-list">
+            <div class="notification-item unread">
+                <div class="notification-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="notification-content">
+                    <h4>New Recommendations</h4>
+                    <p>5 new events match your interests</p>
+                    <span class="notification-time">2 hours ago</span>
+                </div>
+            </div>
+            <div class="notification-item unread">
+                <div class="notification-icon">
+                    <i class="fas fa-user-friends"></i>
+                </div>
+                <div class="notification-content">
+                    <h4>Friends Activity</h4>
+                    <p>Sarah booked tickets for Music Festival</p>
+                    <span class="notification-time">5 hours ago</span>
+                </div>
+            </div>
+        </div>
+        <div class="notification-footer">
+            <button class="mark-all-read" id="markAllRead">
+                <i class="fas fa-check-double"></i>
+                Mark All as Read
+            </button>
+        </div>
+    </div>
+
+    <!-- Event Details Modal -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal-content event-modal">
+            <div class="modal-header">
+                <h3 id="modalEventTitle">Event Details</h3>
+                <button class="modal-close" id="closeEventModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalEventContent">
+                <!-- Filled by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Preferences Modal -->
+    <div class="modal-overlay" id="preferencesModal">
+        <div class="modal-content preferences-modal">
+            <div class="modal-header">
+                <h3>Recommendation Preferences</h3>
+                <button class="modal-close" id="closePreferencesModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="preferences-form">
+                    <div class="preference-section">
+                        <h4>Interests</h4>
+                        <p>Select categories you're interested in:</p>
+                        <div class="preference-tags">
+                            <label class="preference-tag">
+                                <input type="checkbox" checked>
+                                <span class="tag-content">
+                                    <i class="fas fa-laptop-code"></i> Technology
+                                </span>
+                            </label>
+                            <label class="preference-tag">
+                                <input type="checkbox" checked>
+                                <span class="tag-content">
+                                    <i class="fas fa-music"></i> Music
+                                </span>
+                            </label>
+                            <label class="preference-tag">
+                                <input type="checkbox" checked>
+                                <span class="tag-content">
+                                    <i class="fas fa-utensils"></i> Food & Drink
+                                </span>
+                            </label>
+                            <label class="preference-tag">
+                                <input type="checkbox">
+                                <span class="tag-content">
+                                    <i class="fas fa-palette"></i> Arts
+                                </span>
+                            </label>
+                            <label class="preference-tag">
+                                <input type="checkbox">
+                                <span class="tag-content">
+                                    <i class="fas fa-briefcase"></i> Business
+                                </span>
+                            </label>
+                            <label class="preference-tag">
+                                <input type="checkbox">
+                                <span class="tag-content">
+                                    <i class="fas fa-futbol"></i> Sports
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="preference-section">
+                        <h4>Price Range</h4>
+                        <div class="price-range">
+                            <div class="range-slider">
+                                <input type="range" min="0" max="500" value="200" class="slider" id="priceRange">
+                            </div>
+                            <div class="range-values">
+                                <span>$0</span>
+                                <span id="currentPrice">$200</span>
+                                <span>$500+</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="preference-section">
+                        <h4>Distance</h4>
+                        <div class="distance-options">
+                            <label class="distance-option">
+                                <input type="radio" name="distance" value="5" checked>
+                                <span class="option-content">Within 5 miles</span>
+                            </label>
+                            <label class="distance-option">
+                                <input type="radio" name="distance" value="10">
+                                <span class="option-content">Within 10 miles</span>
+                            </label>
+                            <label class="distance-option">
+                                <input type="radio" name="distance" value="25">
+                                <span class="option-content">Within 25 miles</span>
+                            </label>
+                            <label class="distance-option">
+                                <input type="radio" name="distance" value="any">
+                                <span class="option-content">Any distance</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="preference-section">
+                        <h4>Notification Settings</h4>
+                        <div class="notification-options">
+                            <label class="notification-option">
+                                <input type="checkbox" checked>
+                                <span class="option-content">New recommendations</span>
+                            </label>
+                            <label class="notification-option">
+                                <input type="checkbox" checked>
+                                <span class="option-content">Friend activities</span>
+                            </label>
+                            <label class="notification-option">
+                                <input type="checkbox">
+                                <span class="option-content">Price drops</span>
+                            </label>
+                            <label class="notification-option">
+                                <input type="checkbox" checked>
+                                <span class="option-content">Trending events</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn-cancel" id="cancelPreferences">Cancel</button>
+                        <button class="btn-save" id="savePreferences">Save Preferences</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/user/dashboard.js"></script>
+    <script src="../../js/user/recommended.js"></script>
+</body>
+</html>

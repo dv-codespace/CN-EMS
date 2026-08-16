@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/icons/icon.png">
+    <title>Organizer Management | Evento Admin</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/org.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-calendar-alt"></i>
+                <h2>Evento <br> Admin</h2>
+            </div>
+        </div>
+
+        <div class="user-profile">
+            <div class="avatar">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Admin" alt="Admin">
+            </div>
+            <div class="user-info">
+                <h3>Admin User</h3>
+                <p>System Administrator</p>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="userman.html"><i class="fas fa-users"></i> User Management</a></li>
+            <li><a href="org.html" class="active"><i class="fas fa-user-tie"></i> Organizers</a></li>
+            <li><a href="alleve.html"><i class="fas fa-calendar-check"></i> All Events</a></li>
+            <li><a href="categories.html"><i class="fas fa-tags"></i> Categories</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-line"></i> System Analytics</a></li>
+            <li><a href="reports.html"><i class="fas fa-file-alt"></i> Reports</a></li>
+            <li><a href="transactions.html"><i class="fas fa-credit-card"></i> Transactions</a></li>
+            <li><a href="settings.html"><i class="fas fa-sliders-h"></i> System Settings</a></li>
+            <li><a href="auditlogs.html"><i class="fas fa-clipboard-list"></i> Audit Logs</a></li>
+            
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="#" class="quick-switch">
+                <i class="fas fa-exchange-alt"></i>
+                Switch to Organizer View
+            </a>
+            <div class="system-status">
+                <div class="status-indicator online"></div>
+                <span>System Online</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="page-title">
+                <h1>Organizer Management</h1>
+                <p id="currentDate">Manage and monitor event organizers</p>
+            </div>
+            
+            <div class="top-actions">
+                <div class="quick-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search organizers..." id="organizerSearch">
+                </div>
+                <button class="action-btn" id="addOrganizerBtn">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Add Organizer</span>
+                </button>
+                <button class="action-btn" id="exportBtn">
+                    <i class="fas fa-download"></i>
+                    <span>Export</span>
+                </button>
+                <div class="admin-notifications">
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count">3</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Organizer Stats -->
+        <div class="system-stats">
+            <div class="stat-card">
+                <div class="stat-icon total-users">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>89</h3>
+                    <p>Total Organizers</p>
+                    <div class="stat-trend">
+                        <span class="trend up"><i class="fas fa-arrow-up"></i> 15%</span>
+                        <span class="stat-period">This Month</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon active-events">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>65</h3>
+                    <p>Verified Organizers</p>
+                    <div class="stat-trend">
+                        <span class="trend up"><i class="fas fa-arrow-up"></i> 8%</span>
+                        <span class="stat-period">This Week</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon total-revenue">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>12</h3>
+                    <p>Pending Verification</p>
+                    <div class="stat-trend">
+                        <span class="trend down"><i class="fas fa-arrow-down"></i> 5%</span>
+                        <span class="stat-period">Today</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon system-health">
+                    <i class="fas fa-ban"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>8</h3>
+                    <p>Suspended</p>
+                    <div class="stat-trend">
+                        <span class="trend stable"><i class="fas fa-minus"></i> 0%</span>
+                        <span class="stat-period">Last 30 Days</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon pending-actions">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>156</h3>
+                    <p>Active Events</p>
+                    <div class="stat-trend">
+                        <span class="trend up"><i class="fas fa-arrow-up"></i> 12%</span>
+                        <span class="stat-period">Total by Organizers</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon active-organizers">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>$45,280</h3>
+                    <p>Total Revenue</p>
+                    <div class="stat-trend">
+                        <span class="trend up"><i class="fas fa-arrow-up"></i> 24%</span>
+                        <span class="stat-period">From Organizers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions-section">
+            <div class="section-header">
+                <h3><i class="fas fa-bolt"></i> Quick Organizer Actions</h3>
+                <p>Frequently used organizer management tasks</p>
+            </div>
+            
+            <div class="actions-grid">
+                <button class="action-card" id="bulkVerifyBtn">
+                    <div class="action-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="action-info">
+                        <h4>Bulk Verify</h4>
+                        <p>Verify multiple organizers at once</p>
+                    </div>
+                </button>
+                
+                <button class="action-card" id="sendNotificationBtn">
+                    <div class="action-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div class="action-info">
+                        <h4>Send Notification</h4>
+                        <p>Send announcement to organizers</p>
+                    </div>
+                </button>
+                
+                <button class="action-card" id="performanceReportBtn">
+                    <div class="action-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="action-info">
+                        <h4>Performance Report</h4>
+                        <p>Generate organizer performance report</p>
+                    </div>
+                </button>
+                
+                <button class="action-card" id="trainingMaterialBtn">
+                    <div class="action-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="action-info">
+                        <h4>Training Materials</h4>
+                        <p>Manage organizer training content</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="content-grid">
+            <!-- Organizer List Table -->
+            <div class="content-card wide-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-list"></i> All Organizers</h3>
+                    <div class="table-filter">
+                        <select id="statusFilter">
+                            <option value="all">All Status</option>
+                            <option value="verified">Verified</option>
+                            <option value="pending">Pending</option>
+                            <option value="suspended">Suspended</option>
+                        </select>
+                        <select id="sortFilter">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="name">Name A-Z</option>
+                            <option value="events">Most Events</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="organizers-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="selectAll">
+                                    </th>
+                                    <th>Organizer</th>
+                                    <th>Email</th>
+                                    <th>Events</th>
+                                    <th>Revenue</th>
+                                    <th>Status</th>
+                                    <th>Joined</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkbox" class="row-select"></td>
+                                    <td>
+                                        <div class="organizer-cell">
+                                            <div class="organizer-avatar">
+                                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=TechCorp" alt="TechCorp">
+                                            </div>
+                                            <div class="organizer-info">
+                                                <h4>TechCorp Events</h4>
+                                                <p>ID: ORG-001</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>contact@techcorp.com</td>
+                                    <td>
+                                        <span class="badge count">12</span>
+                                    </td>
+                                    <td>
+                                        <span class="revenue">$15,240</span>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge verified">Verified</span>
+                                    </td>
+                                    <td>2023-12-15</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="action-icon view" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="action-icon edit" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="action-icon suspend" title="Suspend">
+                                                <i class="fas fa-ban"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><input type="checkbox" class="row-select"></td>
+                                    <td>
+                                        <div class="organizer-cell">
+                                            <div class="organizer-avatar">
+                                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=MusicPro" alt="MusicPro">
+                                            </div>
+                                            <div class="organizer-info">
+                                                <h4>MusicPro Events</h4>
+                                                <p>ID: ORG-002</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>info@musicpro.com</td>
+                                    <td>
+                                        <span class="badge count">8</span>
+                                    </td>
+                                    <td>
+                                        <span class="revenue">$12,850</span>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge verified">Verified</span>
+                                    </td>
+                                    <td>2024-01-10</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="action-icon view" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="action-icon edit" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="action-icon suspend" title="Suspend">
+                                                <i class="fas fa-ban"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><input type="checkbox" class="row-select"></td>
+                                    <td>
+                                        <div class="organizer-cell">
+                                            <div class="organizer-avatar">
+                                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=StartupHub" alt="StartupHub">
+                                            </div>
+                                            <div class="organizer-info">
+                                                <h4>StartupHub Network</h4>
+                                                <p>ID: ORG-003</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>hello@startuphub.com</td>
+                                    <td>
+                                        <span class="badge count">15</span>
+                                    </td>
+                                    <td>
+                                        <span class="revenue">$9,420</span>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge verified">Verified</span>
+                                    </td>
+                                    <td>2024-02-22</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="action-icon view" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="action-icon edit" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="action-icon suspend" title="Suspend">
+                                                <i class="fas fa-ban"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><input type="checkbox" class="row-select"></td>
+                                    <td>
+                                        <div class="organizer-cell">
+                                            <div class="organizer-avatar">
+                                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ArtGallery" alt="ArtGallery">
+                                            </div>
+                                            <div class="organizer-info">
+                                                <h4>Art Gallery Inc.</h4>
+                                                <p>ID: ORG-004</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>gallery@artinc.com</td>
+                                    <td>
+                                        <span class="badge count">6</span>
+                                    </td>
+                                    <td>
+                                        <span class="revenue">$8,150</span>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge pending">Pending</span>
+                                    </td>
+                                    <td>2024-03-05</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="action-icon view" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="action-icon verify" title="Verify">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button class="action-icon reject" title="Reject">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><input type="checkbox" class="row-select"></td>
+                                    <td>
+                                        <div class="organizer-cell">
+                                            <div class="organizer-avatar">
+                                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=WorkshopPro" alt="WorkshopPro">
+                                            </div>
+                                            <div class="organizer-info">
+                                                <h4>Workshop Pro</h4>
+                                                <p>ID: ORG-005</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>team@workshoppro.com</td>
+                                    <td>
+                                        <span class="badge count">10</span>
+                                    </td>
+                                    <td>
+                                        <span class="revenue">$7,890</span>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge suspended">Suspended</span>
+                                    </td>
+                                    <td>2023-11-30</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="action-icon view" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="action-icon activate" title="Activate">
+                                                <i class="fas fa-play"></i>
+                                            </button>
+                                            <button class="action-icon delete" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><input type="checkbox" class="row-select"></td>
+                                    <td>
+                                        <div class="organizer-cell">
+                                            <div class="organizer-avatar">
+                                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=MikeChen" alt="Mike">
+                                            </div>
+                                            <div class="organizer-info">
+                                                <h4>Mike Chen</h4>
+                                                <p>ID: ORG-006</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>mike@chenevents.com</td>
+                                    <td>
+                                        <span class="badge count">0</span>
+                                    </td>
+                                    <td>
+                                        <span class="revenue">$0</span>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge pending">Pending</span>
+                                    </td>
+                                    <td>2024-03-10</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="action-icon view" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="action-icon verify" title="Verify">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button class="action-icon reject" title="Reject">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><input type="checkbox" class="row-select"></td>
+                                    <td>
+                                        <div class="organizer-cell">
+                                            <div class="organizer-avatar">
+                                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=SaraEvents" alt="Sara">
+                                            </div>
+                                            <div class="organizer-info">
+                                                <h4>Sarah Smith Events</h4>
+                                                <p>ID: ORG-007</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>sarah@ssmith.com</td>
+                                    <td>
+                                        <span class="badge count">3</span>
+                                    </td>
+                                    <td>
+                                        <span class="revenue">$2,450</span>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge verified">Verified</span>
+                                    </td>
+                                    <td>2024-02-15</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="action-icon view" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="action-icon edit" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="action-icon suspend" title="Suspend">
+                                                <i class="fas fa-ban"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><input type="checkbox" class="row-select"></td>
+                                    <td>
+                                        <div class="organizer-cell">
+                                            <div class="organizer-avatar">
+                                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=FoodFest" alt="FoodFest">
+                                            </div>
+                                            <div class="organizer-info">
+                                                <h4>Food Festival Co.</h4>
+                                                <p>ID: ORG-008</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>info@foodfestco.com</td>
+                                    <td>
+                                        <span class="badge count">5</span>
+                                    </td>
+                                    <td>
+                                        <span class="revenue">$6,820</span>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge verified">Verified</span>
+                                    </td>
+                                    <td>2024-01-25</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="action-icon view" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="action-icon edit" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="action-icon suspend" title="Suspend">
+                                                <i class="fas fa-ban"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button class="pagination-btn disabled">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="pagination-btn active">1</button>
+                        <button class="pagination-btn">2</button>
+                        <button class="pagination-btn">3</button>
+                        <span class="pagination-ellipsis">...</span>
+                        <button class="pagination-btn">8</button>
+                        <button class="pagination-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Verifications -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-clock"></i> Pending Verifications</h3>
+                    <span class="pending-count">12 items</span>
+                </div>
+                <div class="card-body">
+                    <div class="approval-list">
+                        <div class="approval-item">
+                            <div class="approval-info">
+                                <div class="approval-avatar">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Mike" alt="Mike">
+                                </div>
+                                <div>
+                                    <h4>Mike Chen</h4>
+                                    <p>Submitted 2 days ago</p>
+                                    <span class="approval-time">ID: ORG-006</span>
+                                </div>
+                            </div>
+                            <div class="approval-actions">
+                                <button class="approve-btn">
+                                    <i class="fas fa-check"></i>
+                                    Verify
+                                </button>
+                                <button class="reject-btn">
+                                    <i class="fas fa-times"></i>
+                                    Reject
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="approval-item">
+                            <div class="approval-info">
+                                <div class="approval-avatar">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=NewOrg1" alt="New">
+                                </div>
+                                <div>
+                                    <h4>Tech Startup Meet</h4>
+                                    <p>Submitted 1 day ago</p>
+                                    <span class="approval-time">ID: ORG-009</span>
+                                </div>
+                            </div>
+                            <div class="approval-actions">
+                                <button class="approve-btn">
+                                    <i class="fas fa-check"></i>
+                                    Verify
+                                </button>
+                                <button class="reject-btn">
+                                    <i class="fas fa-times"></i>
+                                    Reject
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="approval-item">
+                            <div class="approval-info">
+                                <div class="approval-avatar">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=NewOrg2" alt="New">
+                                </div>
+                                <div>
+                                    <h4>Art Studio Pro</h4>
+                                    <p>Submitted 3 days ago</p>
+                                    <span class="approval-time">ID: ORG-010</span>
+                                </div>
+                            </div>
+                            <div class="approval-actions">
+                                <button class="approve-btn">
+                                    <i class="fas fa-check"></i>
+                                    Verify
+                                </button>
+                                <button class="reject-btn">
+                                    <i class="fas fa-times"></i>
+                                    Reject
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="approval-item">
+                            <div class="approval-info">
+                                <div class="approval-avatar">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=NewOrg3" alt="New">
+                                </div>
+                                <div>
+                                    <h4>Fitness Expo Co.</h4>
+                                    <p>Submitted 5 hours ago</p>
+                                    <span class="approval-time">ID: ORG-011</span>
+                                </div>
+                            </div>
+                            <div class="approval-actions">
+                                <button class="approve-btn">
+                                    <i class="fas fa-check"></i>
+                                    Verify
+                                </button>
+                                <button class="reject-btn">
+                                    <i class="fas fa-times"></i>
+                                    Reject
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="view-all-pending-btn">
+                        <i class="fas fa-list"></i>
+                        View All Pending
+                    </button>
+                </div>
+            </div>
+
+            <!-- Top Performing Organizers -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-trophy"></i> Top Performers</h3>
+                    <span class="period-label">This Month</span>
+                </div>
+                <div class="card-body">
+                    <div class="organizer-ranking">
+                        <div class="rank-item">
+                            <div class="rank-number">1</div>
+                            <div class="organizer-avatar">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=TechCorp" alt="TechCorp">
+                            </div>
+                            <div class="organizer-info">
+                                <h4>TechCorp Events</h4>
+                                <p>12 Events • $15,240 Revenue</p>
+                            </div>
+                            <div class="organizer-score">
+                                <span class="score">98.5</span>
+                                <span class="score-label">Rating</span>
+                            </div>
+                        </div>
+                        
+                        <div class="rank-item">
+                            <div class="rank-number">2</div>
+                            <div class="organizer-avatar">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=MusicPro" alt="MusicPro">
+                            </div>
+                            <div class="organizer-info">
+                                <h4>MusicPro Events</h4>
+                                <p>8 Events • $12,850 Revenue</p>
+                            </div>
+                            <div class="organizer-score">
+                                <span class="score">96.2</span>
+                                <span class="score-label">Rating</span>
+                            </div>
+                        </div>
+                        
+                        <div class="rank-item">
+                            <div class="rank-number">3</div>
+                            <div class="organizer-avatar">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=StartupHub" alt="StartupHub">
+                            </div>
+                            <div class="organizer-info">
+                                <h4>StartupHub Network</h4>
+                                <p>15 Events • $9,420 Revenue</p>
+                            </div>
+                            <div class="organizer-score">
+                                <span class="score">94.8</span>
+                                <span class="score-label">Rating</span>
+                            </div>
+                        </div>
+                        
+                        <div class="rank-item">
+                            <div class="rank-number">4</div>
+                            <div class="organizer-avatar">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=FoodFest" alt="FoodFest">
+                            </div>
+                            <div class="organizer-info">
+                                <h4>Food Festival Co.</h4>
+                                <p>5 Events • $6,820 Revenue</p>
+                            </div>
+                            <div class="organizer-score">
+                                <span class="score">92.3</span>
+                                <span class="score-label">Rating</span>
+                            </div>
+                        </div>
+                        
+                        <div class="rank-item">
+                            <div class="rank-number">5</div>
+                            <div class="organizer-avatar">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=SaraEvents" alt="Sara">
+                            </div>
+                            <div class="organizer-info">
+                                <h4>Sarah Smith Events</h4>
+                                <p>3 Events • $2,450 Revenue</p>
+                            </div>
+                            <div class="organizer-score">
+                                <span class="score">90.5</span>
+                                <span class="score-label">Rating</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Organizer Statistics -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-pie"></i> Organizer Stats</h3>
+                    <div class="stat-filter">
+                        <select id="organizerStatFilter">
+                            <option value="status">By Status</option>
+                            <option value="revenue">By Revenue</option>
+                            <option value="events">By Events</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="stats-pie-chart">
+                        <div class="chart-placeholder">
+                            <!-- In real app, this would be a pie chart -->
+                            <div class="pie-chart">
+                                <div class="pie-segment verified" style="--percentage: 65%;"></div>
+                                <div class="pie-segment pending" style="--percentage: 15%;"></div>
+                                <div class="pie-segment suspended" style="--percentage: 10%;"></div>
+                                <div class="pie-segment inactive" style="--percentage: 10%;"></div>
+                                <div class="pie-center">
+                                    <span class="pie-total">89</span>
+                                    <span class="pie-label">Total</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="legend-color verified"></span>
+                                <span>Verified</span>
+                                <span class="legend-count">65</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color pending"></span>
+                                <span>Pending</span>
+                                <span class="legend-count">12</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color suspended"></span>
+                                <span>Suspended</span>
+                                <span class="legend-count">8</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color inactive"></span>
+                                <span>Inactive</span>
+                                <span class="legend-count">4</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Stats -->
+        <div class="footer-stats">
+            <div class="footer-stat">
+                <div class="stat-label">Total Organizers</div>
+                <div class="stat-value">89</div>
+            </div>
+            <div class="footer-stat">
+                <div class="stat-label">Avg. Events per Organizer</div>
+                <div class="stat-value">5.8</div>
+            </div>
+            <div class="footer-stat">
+                <div class="stat-label">Verification Rate</div>
+                <div class="stat-value">88%</div>
+            </div>
+            <div class="footer-stat">
+                <div class="stat-label">Top Organizer Revenue</div>
+                <div class="stat-value">$15,240</div>
+            </div>
+            <div class="footer-stat">
+                <div class="stat-label">Active This Month</div>
+                <div class="stat-value">42</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Organizer Modal -->
+    <div class="modal-overlay" id="addOrganizerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Organizer</h3>
+                <button class="modal-close" id="closeOrganizerModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="organizerForm">
+                    <div class="form-group">
+                        <label for="organizerName">Organizer Name *</label>
+                        <input type="text" id="organizerName" placeholder="Enter organizer name" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="organizerEmail">Email Address *</label>
+                            <input type="email" id="organizerEmail" placeholder="Enter email address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="organizerPhone">Phone Number</label>
+                            <input type="tel" id="organizerPhone" placeholder="Enter phone number">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="organizerType">Organizer Type</label>
+                        <select id="organizerType">
+                            <option value="company">Company</option>
+                            <option value="individual">Individual</option>
+                            <option value="nonprofit">Non-Profit</option>
+                            <option value="educational">Educational</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="organizerWebsite">Website</label>
+                        <input type="url" id="organizerWebsite" placeholder="https://example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="organizerDescription">Description</label>
+                        <textarea id="organizerDescription" rows="3" placeholder="Brief description about the organizer"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="initialStatus">Initial Status</label>
+                        <select id="initialStatus">
+                            <option value="verified">Verified</option>
+                            <option value="pending">Pending Verification</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn" id="cancelOrganizerBtn">Cancel</button>
+                        <button type="submit" class="send-alert-btn">
+                            <i class="fas fa-user-plus"></i>
+                            Create Organizer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Panel (Same as dashboard) -->
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <button class="close-notifications" id="closeNotifications">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notification-list">
+            <div class="notification-item unread">
+                <div class="notification-icon">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="notification-content">
+                    <h4>New Organizer Verification</h4>
+                    <p>Mike Chen requested organizer verification</p>
+                    <span class="notification-time">10 minutes ago</span>
+                </div>
+            </div>
+            <div class="notification-item unread">
+                <div class="notification-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="notification-content">
+                    <h4>System Alert</h4>
+                    <p>High database load detected</p>
+                    <span class="notification-time">1 hour ago</span>
+                </div>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon">
+                    <i class="fas fa-calendar-plus"></i>
+                </div>
+                <div class="notification-content">
+                    <h4>New Event Created</h4>
+                    <p>"AI Conference 2024" submitted for review</p>
+                    <span class="notification-time">2 hours ago</span>
+                </div>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <div class="notification-content">
+                    <h4>Large Transaction</h4>
+                    <p>$5,000 payment received for Tech Summit</p>
+                    <span class="notification-time">5 hours ago</span>
+                </div>
+            </div>
+        </div>
+        <div class="notification-footer">
+            <button class="mark-all-read">
+                <i class="fas fa-check-double"></i>
+                Mark All as Read
+            </button>
+            <button class="view-all-notifications">
+                View All Notifications
+            </button>
+        </div>
+    </div>
+
+    <!-- CSS for table and additional styles -->
+    <style>
+        /* Table Styles */
+        .organizers-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        .organizers-table thead {
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .organizers-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .organizers-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .organizers-table tbody tr {
+            transition: var(--transition);
+        }
+        
+        .organizers-table tbody tr:hover {
+            background: var(--admin-light);
+        }
+        
+        /* Organizer Cell */
+        .organizer-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .organizer-cell .organizer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        
+        .organizer-cell .organizer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .organizer-cell .organizer-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .organizer-cell .organizer-info p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        /* Badges */
+        .badge.count {
+            background: var(--admin-light);
+            color: var(--admin-color);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .revenue {
+            font-weight: 600;
+            color: var(--success-color);
+        }
+        
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .status-badge.verified {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+        
+        .status-badge.pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .status-badge.suspended {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+        
+        /* Table Actions */
+        .table-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .action-icon:hover {
+            transform: translateY(-2px);
+        }
+        
+        .action-icon.view {
+            color: var(--primary-color);
+        }
+        
+        .action-icon.view:hover {
+            background: var(--primary-light);
+            border-color: var(--primary-color);
+        }
+        
+        .action-icon.edit {
+            color: var(--warning-color);
+        }
+        
+        .action-icon.edit:hover {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--warning-color);
+        }
+        
+        .action-icon.suspend {
+            color: var(--danger-color);
+        }
+        
+        .action-icon.suspend:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--danger-color);
+        }
+        
+        .action-icon.verify {
+            color: var(--success-color);
+        }
+        
+        .action-icon.verify:hover {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--success-color);
+        }
+        
+        .action-icon.reject {
+            color: var(--danger-color);
+        }
+        
+        .action-icon.reject:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--danger-color);
+        }
+        
+        .action-icon.activate {
+            color: var(--success-color);
+        }
+        
+        .action-icon.activate:hover {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--success-color);
+        }
+        
+        .action-icon.delete {
+            color: var(--danger-color);
+        }
+        
+        .action-icon.delete:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--danger-color);
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+        
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .pagination-btn:hover:not(.disabled):not(.active) {
+            background: var(--admin-light);
+            color: var(--admin-color);
+            border-color: var(--admin-color);
+        }
+        
+        .pagination-btn.active {
+            background: var(--admin-color);
+            color: white;
+            border-color: var(--admin-color);
+        }
+        
+        .pagination-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination-ellipsis {
+            color: var(--text-secondary);
+            padding: 0 5px;
+        }
+        
+        /* Table Filter */
+        .table-filter {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .table-filter select {
+            padding: 6px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 13px;
+            cursor: pointer;
+        }
+        
+        /* Form Row */
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        /* Pie Chart */
+        .stats-pie-chart {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .pie-chart {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--success-color) 0% 65%,
+                var(--warning-color) 65% 80%,
+                var(--danger-color) 80% 90%,
+                var(--text-secondary) 90% 100%
+            );
+            position: relative;
+        }
+        
+        .pie-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .pie-total {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--admin-color);
+        }
+        
+        .pie-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        /* Legend colors for pie chart */
+        .legend-color.verified {
+            background-color: var(--success-color);
+        }
+        
+        .legend-color.pending {
+            background-color: var(--warning-color);
+        }
+        
+        .legend-color.suspended {
+            background-color: var(--danger-color);
+        }
+        
+        .legend-color.inactive {
+            background-color: var(--text-secondary);
+        }
+        
+        /* Responsive Table */
+        @media (max-width: 1024px) {
+            .table-responsive {
+                overflow-x: auto;
+            }
+            
+            .organizers-table {
+                min-width: 900px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .table-filter {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .stats-pie-chart {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+
+    <script src="../js/auth-helper.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/org.js"></script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../assets/icons/icon-usr.png">
+    <title>My Events | Evento</title>
+    <link rel="stylesheet" href="../../css/user/dashboard.css">
+    <link rel="stylesheet" href="../../css/user/upcoming.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <img src="../../assets/icons/icon-usr.png" alt="Evento Logo" class="nav-logo" style="width: 32px; height: 32px; object-fit: contain;">
+                <h2>Evento</h2>
+            </div>
+        </div>
+
+        <div class="user-profile">
+            <div class="avatar">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" alt="User">
+            </div>
+            <div class="user-info">
+                <h3>Alex Johnson</h3>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="upcoming.html" class="active"><i class="fas fa-calendar-check"></i> My Events</a></li>
+            <li><a href="recommended.html"><i class="fas fa-star"></i> Explore Events</a></li>
+            <li><a href="tickets.html"><i class="fas fa-ticket-alt"></i> Explore Services</a></li>
+            <li><a href="friends.html"><i class="fas fa-user-friends"></i> Friends</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="page-title">
+                <h1>My Events</h1>
+                <p id="currentDate">Monday, December 11, 2024</p>
+            </div>
+            
+            <div class="top-actions">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search my events..." id="searchInput">
+                </div>
+                <div class="custom-dropdown" id="locationDropdown">
+                    <div class="dropdown-selected">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>All India</span>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <div class="dropdown-options">
+                        <div class="dropdown-option active" data-value="all">All India</div>
+                        <div class="dropdown-option" data-value="mumbai">Mumbai</div>
+                        <div class="dropdown-option" data-value="delhi">Delhi</div>
+                        <div class="dropdown-option" data-value="bangalore">Bangalore</div>
+                        <div class="dropdown-option" data-value="chennai">Chennai</div>
+                        <div class="dropdown-option" data-value="hyderabad">Hyderabad</div>
+                    </div>
+                </div>
+                <button class="action-btn notification-btn" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </button>
+                <button class="action-btn user-btn" id="logoutBtn" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Filter Controls -->
+        <div class="filter-section">
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label for="categoryFilter"><i class="fas fa-filter"></i> Filter by:</label>
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="tech">Technology</option>
+                        <option value="music">Music</option>
+                        <option value="food">Food & Drink</option>
+                        <option value="sports">Sports</option>
+                        <option value="arts">Arts</option>
+                        <option value="business">Business</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="dateFilter"><i class="fas fa-calendar"></i> Date:</label>
+                    <select id="dateFilter" class="filter-select">
+                        <option value="all">All Dates</option>
+                        <option value="today">Today</option>
+                        <option value="tomorrow">Tomorrow</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="sortFilter"><i class="fas fa-sort"></i> Sort by:</label>
+                    <select id="sortFilter" class="filter-select">
+                        <option value="date-asc">Date (Earliest)</option>
+                        <option value="date-desc">Date (Latest)</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="name">Name (A-Z)</option>
+                    </select>
+                </div>
+                
+                <button class="filter-reset" id="resetFilters">
+                    <i class="fas fa-redo"></i> Reset Filters
+                </button>
+            </div>
+        </div>
+
+        
+        <!-- Main Content Wrapper for My Events -->
+        <div class="my-events-layout" style="display: flex; gap: 20px; padding: 0 30px; margin-top: 20px; align-items: flex-start;">
+            
+            <!-- Left Side: Registered Events List -->
+            <div class="events-list-container" style="flex: 1;">
+                <div class="bms-section-header">
+                    <h2 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 20px;">My Registered Events</h2>
+                </div>
+                
+                <div class="events-list" id="myEventsList" style="display: flex; flex-direction: column; gap: 15px;">
+                    <!-- Template will be injected here via JS -->
+                    <div class="no-events-placeholder" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px 20px; color: var(--text-secondary); background: var(--bg-secondary); border-radius: var(--radius-md); border: 2px dashed var(--border-color); text-align: center;">
+                        <i class="fas fa-ticket-alt" style="font-size: 2.5rem; margin-bottom: 15px; color: #cbd5e1;"></i>
+                        <p style="font-size: 1.1rem; font-weight: 500;">No registered events yet</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Calendar -->
+            <div class="calendar-sidebar" style="width: 350px; flex-shrink: 0;">
+                <!-- Calendar Section -->
+        <div class="calendar-section">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Event Calendar</h3>
+                    <div class="calendar-nav">
+                        <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                        <span id="currentMonth">December 2024</span>
+                        <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Template for Registered Event List Item -->
+        <template id="registeredEventTemplate">
+            <div class="registered-event-card" style="display: flex; background: var(--bg-primary); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); padding: 15px; gap: 20px;">
+                <div class="event-date-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(248, 68, 100, 0.1); color: #f84464; width: 70px; height: 70px; border-radius: 8px;">
+                    <span class="month" style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase;"></span>
+                    <span class="day" style="font-size: 1.5rem; font-weight: 700; line-height: 1;"></span>
+                </div>
+                <div class="event-details" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                    <h4 class="event-title" style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px;"></h4>
+                    <p class="event-location" style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 5px;"><i class="fas fa-map-marker-alt"></i> <span></span></p>
+                    <p class="event-time" style="font-size: 0.85rem; color: var(--text-secondary);"><i class="fas fa-clock"></i> <span></span></p>
+                </div>
+                <div class="event-actions" style="display: flex; align-items: center;">
+                    <button class="btn-view-ticket" style="background: #f84464; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-weight: 500; cursor: pointer;">View Ticket</button>
+                </div>
+            </div>
+        </template>
+
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Upcoming Stats</h4>
+                    <div class="footer-stats">
+                        <div class="footer-stat">
+                            <span class="value" id="footerConfirmed">5</span>
+                            <span class="label">Confirmed</span>
+                        </div>
+                        <div class="footer-stat">
+                            <span class="value" id="footerPending">2</span>
+                            <span class="label">Pending</span>
+                        </div>
+                        <div class="footer-stat">
+                            <span class="value">7</span>
+                            <span class="label">Total</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Evento</h4>
+                    <p>Your gateway to amazing experiences</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Evento. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Notification Panel -->
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <button class="close-notifications" id="closeNotifications">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notification-list">
+            <div class="notification-item unread">
+                <div class="notification-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="notification-content">
+                    <h4>Event Confirmed</h4>
+                    <p>Your registration for Tech Conference is confirmed</p>
+                    <span class="notification-time">2 hours ago</span>
+                </div>
+            </div>
+            <div class="notification-item unread">
+                <div class="notification-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="notification-content">
+                    <h4>Event Reminder</h4>
+                    <p>Tech Conference starts in 3 hours</p>
+                    <span class="notification-time">1 hour ago</span>
+                </div>
+            </div>
+        </div>
+        <div class="notification-footer">
+            <button class="mark-all-read" id="markAllRead">
+                <i class="fas fa-check-double"></i>
+                Mark All as Read
+            </button>
+        </div>
+    </div>
+
+    <!-- Event Details Modal -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal-content event-modal">
+            <div class="modal-header">
+                <h3 id="modalEventTitle">Event Details</h3>
+                <button class="modal-close" id="closeEventModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalEventContent">
+                <!-- Filled by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/user/dashboard.js"></script>
+    <script src="../../js/user/upcoming.js"></script>
+</body>
+</html>
