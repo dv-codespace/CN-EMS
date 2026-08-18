@@ -138,7 +138,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const joinButtons = document.querySelectorAll('.btn-join, .btn-remind, .btn-book');
     
     // Current date for calendar
-    
+    let currentCalendarDate = new Date();
+    const prevMonthBtn = document.getElementById('prevMonthBtn');
+    const nextMonthBtn = document.getElementById('nextMonthBtn');
+    const currentMonth = document.getElementById('currentMonth');
+    const calendarDays = document.getElementById('calendarDays');
     
     // Initialize the dashboard
     initDashboard();
@@ -149,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateDateDisplay();
         
         // Generate calendar
-        
+        generateCalendar();
         
         // Setup event listeners
         setupEventListeners();
@@ -219,7 +223,13 @@ document.addEventListener('DOMContentLoaded', function() {
         currentDate.textContent = now.toLocaleDateString('en-US', options);
     }
     
-    ;
+    function generateCalendar() {
+        if (!currentMonth || !calendarDays) return;
+        
+        const year = currentCalendarDate.getFullYear();
+        const month = currentCalendarDate.getMonth();
+        
+        const monthOptions = { month: 'long', year: 'numeric' };
         currentMonth.textContent = currentCalendarDate.toLocaleDateString('en-US', monthOptions);
         
         // Get first day of month
@@ -303,14 +313,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (prevMonthBtn) {
             prevMonthBtn.addEventListener('click', function() {
                 currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
-                
+                generateCalendar();
             });
         }
         
         if (nextMonthBtn) {
             nextMonthBtn.addEventListener('click', function() {
                 currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
-                
+                generateCalendar();
             });
         }
         
